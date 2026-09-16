@@ -1,3 +1,5 @@
+package collections;
+
 public class Dealer {
 
     private Deck dealerHand = new Deck(0);

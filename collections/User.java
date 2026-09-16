@@ -1,3 +1,5 @@
+package collections;
+
 public class User {
 
     private Deck userHand = new Deck(0);

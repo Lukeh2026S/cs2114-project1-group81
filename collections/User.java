@@ -37,6 +37,29 @@ public class User {
     }
 
 
+    public int getUserChips() {
+        return chips;
+    }
+
+
+    public void setUserChips(int Chips) {
+        chips = Chips;
+    }
+
+
+    public void addUserChips(int Chips) {
+        chips += Chips;
+    }
+
+
+    public boolean betUserChips(int Chips) {
+        if (Chips <= chips) {
+            chips -= Chips;
+            return true;
+        }
+        return false;
+    }
+
     public void printUserCards() {
         for (int i = 0; i < userHand.getDeckLength(); i++) {
             System.out.print(userHand.getCard(i).getSuitAndRank() + " ");
@@ -45,7 +68,10 @@ public class User {
 
 
     public void userOptions(Card dealerCard) {
-        System.out.println("1. Hit\n2. Stand\n3. Double");
+        System.out.print("1. Hit\n2. Stand");
+        if (userHand.getDeckLength() <= 2) {
+            System.out.print("\n3. Double");
+        }
         if (userHand.getCard(0).getRank().equals(userHand.getCard(1).getRank())
             && userHand.getDeckLength() == 2) {
             System.out.println("4. Split");
@@ -77,7 +103,7 @@ public class User {
             else if (inputInt == 2) {
                 return false;
             }
-            else if (inputInt == 3) {
+            else if (inputInt == 3 && userHand.getDeckLength() <= 2) {
                 userHand.addCard(Game.drawPile.drawCard(0));
                 return false;
             }
@@ -113,7 +139,7 @@ public class User {
             else if (input.toLowerCase().equals("stand")) {
                 return false;
             }
-            else if (input.toLowerCase().equals("double")) {
+            else if (input.toLowerCase().equals("double") && userHand.getDeckLength() <= 2) {
                 userHand.addCard(Game.drawPile.drawCard(0));
                 return false;
             }

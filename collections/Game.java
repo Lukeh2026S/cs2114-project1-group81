@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Game {
     static final int NUM_OF_DECKS = 1;
+    
     static Deck drawPile = new Deck(NUM_OF_DECKS);
     static Deck discardPile = new Deck(0);
 
@@ -12,16 +13,33 @@ public class Game {
         drawPile.shuffleCards();
         Dealer dealer1 = new Dealer();
         User user1 = new User(500);
-        
+        while(user1.getUserChips()>0){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Current chips: " + user1.getUserChips() + "\nHow many chips do you want to bet?");
-        int intInput = scanner.nextInt();
+        
+        int intInput = -1;
         while(!user1.betUserChips(intInput)) {
-            System.out.println("You do not have that many chips. Please bet less.");
-            intInput = scanner.nextInt();
+            System.out.println("Current chips: " + user1.getUserChips() + "\nHow many chips do you want to bet?");
+            try {
+                intInput = Integer.parseInt(scanner.nextLine());
+                if(!user1.betUserChips(intInput)) {
+                    System.out.println("You do not have that many chips. Please bet less.");
+                } else {
+                    break;
+                }
+            } catch(NumberFormatException e) {
+                System.out.println("Please enter a number.");
+                intInput = -1;
+            }
+            
+                
+            
         }
 
         // Start Round
+        //dealer1.addDealerCard(new Card("A", "S"));
+        //dealer1.addDealerCard(new Card("3", "S"));
+        //user1.addUserCard(new Card("3", "S"));
+        //user1.addUserCard(new Card("3", "H"));
         dealer1.drawNumCards(2);
         user1.drawNumCards(2);
         String input = null;
@@ -40,79 +58,53 @@ public class Game {
 
         
         dealer1.dealerAction();
+
         System.out.print("The dealer is showing: ");
         dealer1.printDealerCards(false);
         System.out.print("\nYour Cards are: ");
         user1.printUserCards();
-        if (dealer1.dealerHandValue() == 21 && dealer1.getDealerHandLength() == 2) {
-            if (user1.userHandValue() == 21 && user1.getUserHandLength() == 2) {
-                System.out.print("\nPush.");
+
+        checkWin(dealer1, user1);
+        System.out.println(user1.getUserChips());
+        System.out.println(user1.getCurrentBet());
+        
+        }
+    }
+
+    public static void checkWin(Dealer dealer, User user) {
+        if (dealer.dealerHandValue() == 21 && dealer.getDealerHandLength() == 2) {
+            if (user.userHandValue() == 21 && user.getUserHandLength() == 2) {
+                System.out.println("\nPush.");
+                user.addUserChips(user.getCurrentBet());
             } else {
-                System.out.print("\nDealer has blcakjack. You lose.");
+                System.out.println("\nDealer has blcakjack. You lose.");
             }
-        } else if (user1.userHandValue() == 21 && user1.getUserHandLength() == 2) {
-            System.out.print("\nYou have blcakjack. You win!");
-        } else if (user1.userHandValue() <= 21) {
-            if (dealer1.dealerHandValue() <= 21) {
-                if (user1.userHandValue() > dealer1.dealerHandValue()) {
-                    System.out.print("\nYou win!");
+        } else if (user.userHandValue() == 21 && user.getUserHandLength() == 2) {
+            System.out.println("\nYou have blcakjack. You win!");
+            user.addUserChips((int)(user.getCurrentBet()*3.5));
+        } else if (user.userHandValue() <= 21) {
+            if (dealer.dealerHandValue() <= 21) {
+                if (user.userHandValue() > dealer.dealerHandValue()) {
+                    System.out.println("\nYou win!");
+                    user.addUserChips(user.getCurrentBet()*2);
                 }
-                else if (user1.userHandValue() < dealer1.dealerHandValue()) {
-                    System.out.print("\nYou lose.");
+                else if (user.userHandValue() < dealer.dealerHandValue()) {
+                    System.out.println("\nYou lose.");
                 }
                 else {
-                    System.out.print("\nPush.");
+                    System.out.println("\nPush.");
+                    user.addUserChips(user.getCurrentBet());
                 }
             } else {
-                System.out.print("\nThe dealer busted. You win!");
+                System.out.println("\nThe dealer busted. You win!");
+                user.addUserChips(user.getCurrentBet()*2);
             }
-        } else if (dealer1.dealerHandValue() <= 21) {
-            System.out.print("\nYou busted. You lose.");
+        } else if (dealer.dealerHandValue() <= 21) {
+            System.out.println("\nYou busted. You lose.");
         } else {
-            System.out.print("\nYou and the dealer busted. Push.");
+            System.out.println("\nYou and the dealer busted. Push.");
+            user.addUserChips(user.getCurrentBet());
         }
-        
-        
-        
-        
-        
-        
-        
-        // dealer1.addDealerCard(new Card("A", "S"));
-        // dealer1.addDealerCard(new Card("3", "S"));
-        // dealer1.addDealerCard(new Card("K", "S"));
-
-        // dealer1.dealerAction();
-
-        /**
-         * dealer1.addDealerCard(new Card("K", "S"));
-         * System.out.println(drawPile.getDeckLength());
-         * System.out.println(dealer1.getHandDealerLength());
-         * System.out.println(dealer1.dealerHandValue());
-         * for(int i = 0; i < dealer1.getHandDealerLength(); i++){
-         * System.out.println(dealer1.getDealerCard(i).getSuitAndRank() + " " +
-         * dealer1.getDealerCard(i).getValue(0));
-         * }
-         * 
-         * /**
-         * drawPile.shuffleCards();
-         * for(int i = 0; i < 52; i++){
-         * System.out.println((drawPile.getCard(0)).getSuitAndRank());
-         * discardPile.addCard(drawPile.drawCard(0));
-         * 
-         * 
-         * 
-         * 
-         * 
-         * System.out.println((discardPile.getCard(discardPile.getDeckLength()-1)).getSuitAndRank());
-         * 
-         * }
-         * System.out.println(drawPile.getDeckLength());
-         * System.out.println(discardPile.getDeckLength());
-         * drawPile.shuffleInDeck(discardPile);
-         * System.out.println(drawPile.getDeckLength());
-         * System.out.println(discardPile.getDeckLength());
-         * 
-         */
+        user.setCurrentBet(0);
     }
 }

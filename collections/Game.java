@@ -13,62 +13,74 @@ public class Game {
         drawPile.shuffleCards();
         Dealer dealer1 = new Dealer();
         User user1 = new User(500);
-        while(user1.getUserChips()>0){
         Scanner scanner = new Scanner(System.in);
-        
-        int intInput = -1;
-        while(!user1.betUserChips(intInput)) {
-            System.out.println("Current chips: " + user1.getUserChips() + "\nHow many chips do you want to bet?");
-            try {
-                intInput = Integer.parseInt(scanner.nextLine());
-                if(!user1.betUserChips(intInput)) {
-                    System.out.println("You do not have that many chips. Please bet less.");
-                } else {
-                    break;
-                }
-            } catch(NumberFormatException e) {
-                System.out.println("Please enter a number.");
-                intInput = -1;
+        while(user1.getUserChips()>0){
+            
+            if(discardPile.getDeckLength() > (NUM_OF_DECKS*39)) {
+                drawPile.shuffleInDeck(discardPile);
+                drawPile.shuffleCards();
             }
             
+            int intInput = -1;
+            while(!user1.betUserChips(intInput)) {
+                System.out.println("Current chips: " + user1.getUserChips() + "\nHow many chips do you want to bet?");
+                try {
+                    intInput = Integer.parseInt(scanner.nextLine());
+                    if(!user1.betUserChips(intInput)) {
+                        System.out.println("You do not have that many chips. Please bet less.");
+                    } else {
+                        break;
+                    }
+                } catch(NumberFormatException e) {
+                    System.out.println("Please enter a number.");
+                    intInput = -1;
+                }
                 
+                    
+                
+            }
+
+            // Start Round
+            //dealer1.addDealerCard(new Card("A", "S"));
+            //dealer1.addDealerCard(new Card("3", "S"));
+            //user1.addUserCard(new Card("3", "S"));
+            //user1.addUserCard(new Card("3", "H"));
+            dealer1.drawNumCards(2);
+            user1.drawNumCards(2);
+            String input = null;
+
+            while (user1.userAction(input, dealer1.getDealerCard(0)) && user1.userHandValue() <= 21) {
+                System.out.print("The dealer is showing: ");
+                dealer1.printDealerCards(true);
+                System.out.print("\nYour Cards are: ");
+                user1.printUserCards();
+                System.out.println("\nYour options are :");
+                user1.userOptions(dealer1.getDealerCard(0));
+                input = scanner.nextLine();
+            }
+            //scanner.close();
+
+
             
-        }
+            dealer1.dealerAction();
 
-        // Start Round
-        //dealer1.addDealerCard(new Card("A", "S"));
-        //dealer1.addDealerCard(new Card("3", "S"));
-        //user1.addUserCard(new Card("3", "S"));
-        //user1.addUserCard(new Card("3", "H"));
-        dealer1.drawNumCards(2);
-        user1.drawNumCards(2);
-        String input = null;
-
-        while (user1.userAction(input, dealer1.getDealerCard(0)) && user1.userHandValue() <= 21) {
             System.out.print("The dealer is showing: ");
-            dealer1.printDealerCards(true);
+            dealer1.printDealerCards(false);
             System.out.print("\nYour Cards are: ");
             user1.printUserCards();
-            System.out.println("\nYour options are :");
-            user1.userOptions(dealer1.getDealerCard(0));
-            input = scanner.nextLine();
+
+            checkWin(dealer1, user1);
+            System.out.println(user1.getUserChips());
+            System.out.println(user1.getCurrentBet());
+            user1.shuffleUserCards();
+            dealer1.shuffledealerCards();
+
+            
+
+
+
         }
         scanner.close();
-
-
-        
-        dealer1.dealerAction();
-
-        System.out.print("The dealer is showing: ");
-        dealer1.printDealerCards(false);
-        System.out.print("\nYour Cards are: ");
-        user1.printUserCards();
-
-        checkWin(dealer1, user1);
-        System.out.println(user1.getUserChips());
-        System.out.println(user1.getCurrentBet());
-        
-        }
     }
 
     public static void checkWin(Dealer dealer, User user) {

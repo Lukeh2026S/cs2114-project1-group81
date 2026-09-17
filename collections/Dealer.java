@@ -57,4 +57,8 @@ public class Dealer {
             }
         }
     }
+
+    public void shuffledealerCards() {
+        Game.discardPile.shuffleInDeck(dealerHand);
+    }
 }

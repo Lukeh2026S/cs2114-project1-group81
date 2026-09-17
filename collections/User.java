@@ -201,4 +201,9 @@ public class User {
             }
         }
     }
+
+
+    public void shuffleUserCards() {
+        Game.discardPile.shuffleInDeck(userHand);
+    }
 }

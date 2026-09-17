@@ -3,7 +3,7 @@ package collections;
 import java.util.*;
 
 public class Game {
-    static final int NUM_OF_DECKS = 1;
+    static final int NUM_OF_DECKS = 2;
     
     static Deck drawPile = new Deck(NUM_OF_DECKS);
     static Deck discardPile = new Deck(0);
@@ -14,24 +14,31 @@ public class Game {
         Dealer dealer1 = new Dealer();
         User user1 = new User(500);
         Scanner scanner = new Scanner(System.in);
+        gameloop:
         while(user1.getUserChips()>0){
             
             if(discardPile.getDeckLength() > (NUM_OF_DECKS*39)) {
                 drawPile.shuffleInDeck(discardPile);
                 drawPile.shuffleCards();
+                System.out.println("Shuffled cards from discard back into pile");
             }
             
             int intInput = -1;
+            String exitInput;
             while(!user1.betUserChips(intInput)) {
                 System.out.println("Current chips: " + user1.getUserChips() + "\nHow many chips do you want to bet?");
+                exitInput = scanner.nextLine();
                 try {
-                    intInput = Integer.parseInt(scanner.nextLine());
+                    intInput = Integer.parseInt(exitInput);
                     if(!user1.betUserChips(intInput)) {
                         System.out.println("You do not have that many chips. Please bet less.");
                     } else {
                         break;
                     }
                 } catch(NumberFormatException e) {
+                    if(exitInput.equals("EXIT")) {
+                        break gameloop;
+                    }
                     System.out.println("Please enter a number.");
                     intInput = -1;
                 }

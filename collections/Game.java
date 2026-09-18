@@ -71,6 +71,7 @@ public class Game {
                 user1.printUserCards();
                 System.out.println("\nYour options are :");
                 user1.userOptions(dealer1.getDealerCard(0));
+                System.out.print("\nWhat is your choice: ");
                 input = scanner.nextLine();
             }
             //scanner.close();

@@ -58,16 +58,16 @@ public class Game {
             // Start Round
             //dealer1.addDealerCard(new Card("A", "S"));
             //dealer1.addDealerCard(new Card("3", "S"));
-            //user1.addUserCard(new Card("3", "S"));
+            //user1.addUserCard(new Card("10", "S"));
             //user1.addUserCard(new Card("3", "H"));
             dealer1.drawNumCards(2);
             user1.drawNumCards(2);
             String input = null;
 
             while (user1.userAction(input, dealer1.getDealerCard(0)) && user1.userHandValue() <= 21) {
-                System.out.print("The dealer is showing: ");
+                System.out.println("The dealer is showing: ");
                 dealer1.printDealerCards(true);
-                System.out.print("\nYour Cards are: ");
+                System.out.println("\nYour Cards are: ");
                 user1.printUserCards();
                 System.out.println("\nYour options are :");
                 user1.userOptions(dealer1.getDealerCard(0));
@@ -79,9 +79,9 @@ public class Game {
             
             dealer1.dealerAction();
 
-            System.out.print("The dealer is showing: ");
+            System.out.println("The dealer is showing: ");
             dealer1.printDealerCards(false);
-            System.out.print("\nYour Cards are: ");
+            System.out.println("\nYour Cards are: ");
             user1.printUserCards();
 
             checkWin(dealer1, user1);

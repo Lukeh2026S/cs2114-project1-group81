@@ -182,7 +182,7 @@ public class User {
                     .getRank())) {
                 //split
                     return true;
-                } else if (dealerCard.getRank() == "A") {
+                } else if (dealerCard.getRank().equals("A")) {
                     return true;
                     //insurance
                 } else {
@@ -192,7 +192,7 @@ public class User {
                 }
                     
             }
-            else if (inputInt == 5 && dealerCard.getRank() == "A" && userHand
+            else if (inputInt == 5 && dealerCard.getRank().equals("A") && userHand
                 .getCard(0).getRank().equals(userHand.getCard(1).getRank())) {
                     //insurance
                 return true;
@@ -227,14 +227,15 @@ public class User {
                 
                 
             }
-            else if (input.toLowerCase() == "split" && userHand.getCard(0)
+            else if (input.toLowerCase().equals("split") && userHand.getCard(0)
                 .getRank().equals(userHand.getCard(1).getRank())) {
                 //split
                 return true;
             }
-            else if (input.toLowerCase() == "insurance" && dealerCard
-                .getRank() == "A") {
+            else if (input.toLowerCase().equals("insurance") && dealerCard
+                .getRank().equals("A")) {
                 //insurance
+                System.out.println("insurance is called");
                 return true;
             }
             else {

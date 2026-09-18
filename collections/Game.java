@@ -64,7 +64,7 @@ public class Game {
             user1.drawNumCards(2);
             String input = null;
 
-            while (user1.userAction(input, dealer1.getDealerCard(0)) && user1.userHandValue() <= 21) {
+            while (user1.userAction(input, dealer1) && user1.userHandValue() <= 21) {
                 System.out.println("The dealer is showing: ");
                 dealer1.printDealerCards(true);
                 System.out.println("\nYour Cards are: ");
@@ -89,7 +89,7 @@ public class Game {
             System.out.println(user1.getUserChips());
             System.out.println(user1.getCurrentBet());
             user1.shuffleUserCards();
-            dealer1.shuffledealerCards();
+            dealer1.shuffleDealerCards();
 
             
 

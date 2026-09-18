@@ -153,7 +153,7 @@ public class User {
     }
 
 
-    public boolean userAction(String input, Card dealerCard) {
+    public boolean userAction(String input, Dealer dealer) {
         int inputInt;
         if (input == null) {
             System.out.println(
@@ -182,7 +182,7 @@ public class User {
                     .getRank())) {
                 //split
                     return true;
-                } else if (dealerCard.getRank().equals("A")) {
+                } else if (dealer.getDealerCard(0).getRank().equals("A")) {
                     return true;
                     //insurance
                 } else {
@@ -192,7 +192,7 @@ public class User {
                 }
                     
             }
-            else if (inputInt == 5 && dealerCard.getRank().equals("A") && userHand
+            else if (inputInt == 5 && dealer.getDealerCard(0).getRank().equals("A") && userHand
                 .getCard(0).getRank().equals(userHand.getCard(1).getRank())) {
                     //insurance
                 return true;
@@ -232,11 +232,20 @@ public class User {
                 //split
                 return true;
             }
-            else if (input.toLowerCase().equals("insurance") && dealerCard
+            else if (input.toLowerCase().equals("insurance") && dealer.getDealerCard(0)
                 .getRank().equals("A")) {
                 //insurance
-                System.out.println("insurance is called");
-                return true;
+                if(betUserChips(currentBet/2)) {
+                    if (dealer.dealerHandValue() == 21 && dealer.getDealerHandLength() == 2) {
+
+                    } else {
+                         
+                    }
+                } else {
+                    System.out.println("You don't have enough chips to place insurance bet. Please pick another option.");
+                }
+                
+                return false;
             }
             else {
                 System.out.println(

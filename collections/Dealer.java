@@ -117,7 +117,7 @@ public class Dealer {
         }
     }
 
-    public void shuffledealerCards() {
+    public void shuffleDealerCards() {
         Game.discardPile.shuffleInDeck(dealerHand);
     }
 }

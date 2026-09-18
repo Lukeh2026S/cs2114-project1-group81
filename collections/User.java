@@ -84,9 +84,44 @@ public class User {
     }
 
     public void printUserCards() {
+
         for (int i = 0; i < userHand.getDeckLength(); i++) {
-            System.out.print(userHand.getCard(i).getSuitAndRank() + " ");
+            System.out.print("┌──────────┐  ");
         }
+        System.out.println();
+
+        for (int i = 0; i < userHand.getDeckLength(); i++) {
+            Card card = userHand.getCard(i);
+            System.out.printf("│ %-9s│  ", card.getRank());
+        }
+        System.out.println();
+
+        for (int i = 0; i < userHand.getDeckLength(); i++) {
+            System.out.print("│          │  ");
+        }
+        System.out.println();
+
+        for (int i = 0; i < userHand.getDeckLength(); i++) {
+            Card card = userHand.getCard(i);
+            System.out.printf("│     %s    │  ", card.getSuit());
+        }
+        System.out.println();
+
+        for (int i = 0; i < userHand.getDeckLength(); i++) {
+            System.out.print("│          │  ");
+        }
+        System.out.println();
+
+        for (int i = 0; i < userHand.getDeckLength(); i++) {
+            Card card = userHand.getCard(i);
+            System.out.printf("│        %-2s│  ", card.getRank());
+        }
+        System.out.println();
+
+        for (int i = 0; i < userHand.getDeckLength(); i++) {
+            System.out.print("└──────────┘  ");
+        }
+        System.out.println();
     }
 
 

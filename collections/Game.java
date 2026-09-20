@@ -1,3 +1,11 @@
+// Project 1
+// Virginia Tech Honor Code Pledge:
+//
+// As a Hokie, I will conduct myself with honor and integrity at all times.
+// I will not lie, cheat, or steal, nor will I accept the actions of those who do.
+// -- Mayank Rudraraju, Luke Hill, Abigel Daniel
+// LLM Statement:
+//I have not used any assistance for the assignment beyond course resources and staff.
 package collections;
 
 import java.util.*;
@@ -48,21 +56,22 @@ public class Game {
             }
 
             // Start Round
-            //dealer1.addDealerCard(new Card("A", "S"));
-            //dealer1.addDealerCard(new Card("3", "S"));
-            //user1.addUserCard(new Card("3", "S"));
+            dealer1.addDealerCard(new Card("A", "S"));
+            dealer1.addDealerCard(new Card("3", "S"));
+            //user1.addUserCard(new Card("10", "S"));
             //user1.addUserCard(new Card("3", "H"));
-            dealer1.drawNumCards(2);
+            //dealer1.drawNumCards(2);
             user1.drawNumCards(2);
             String input = null;
 
-            while (user1.userAction(input, dealer1.getDealerCard(0)) && user1.userHandValue() <= 21) {
-                System.out.print("The dealer is showing: ");
+            while (user1.userAction(input, dealer1) && user1.userHandValue() <= 21) {
+                System.out.println("The dealer is showing: ");
                 dealer1.printDealerCards(true);
-                System.out.print("\nYour Cards are: ");
+                System.out.println("\nYour Cards are: ");
                 user1.printUserCards();
                 System.out.println("\nYour options are :");
                 user1.userOptions(dealer1.getDealerCard(0));
+                System.out.print("\nWhat is your choice: ");
                 input = scanner.nextLine();
             }
             //scanner.close();
@@ -71,16 +80,16 @@ public class Game {
             
             dealer1.dealerAction();
 
-            System.out.print("The dealer is showing: ");
+            System.out.println("The dealer is showing: ");
             dealer1.printDealerCards(false);
-            System.out.print("\nYour Cards are: ");
+            System.out.println("\nYour Cards are: ");
             user1.printUserCards();
 
             checkWin(dealer1, user1);
             System.out.println(user1.getUserChips());
             System.out.println(user1.getCurrentBet());
             user1.shuffleUserCards();
-            dealer1.shuffledealerCards();
+            dealer1.shuffleDealerCards();
 
             
 

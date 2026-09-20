@@ -1,3 +1,11 @@
+// Project 1
+// Virginia Tech Honor Code Pledge:
+//
+// As a Hokie, I will conduct myself with honor and integrity at all times.
+// I will not lie, cheat, or steal, nor will I accept the actions of those who do.
+// -- Mayank Rudraraju, Luke Hill, Abigel Daniel
+// LLM Statement:
+//I have not used any assistance for the assignment beyond course resources and staff.
 package collections;
 
 import java.util.*;
@@ -84,9 +92,44 @@ public class User {
     }
 
     public void printUserCards() {
+
         for (int i = 0; i < userHand.getDeckLength(); i++) {
-            System.out.print(userHand.getCard(i).getSuitAndRank() + " ");
+            System.out.print("┌──────────┐  ");
         }
+        System.out.println();
+
+        for (int i = 0; i < userHand.getDeckLength(); i++) {
+            Card card = userHand.getCard(i);
+            System.out.printf("│ %-9s│  ", card.getRank());
+        }
+        System.out.println();
+
+        for (int i = 0; i < userHand.getDeckLength(); i++) {
+            System.out.print("│          │  ");
+        }
+        System.out.println();
+
+        for (int i = 0; i < userHand.getDeckLength(); i++) {
+            Card card = userHand.getCard(i);
+            System.out.printf("│     %s    │  ", card.getSuit());
+        }
+        System.out.println();
+
+        for (int i = 0; i < userHand.getDeckLength(); i++) {
+            System.out.print("│          │  ");
+        }
+        System.out.println();
+
+        for (int i = 0; i < userHand.getDeckLength(); i++) {
+            Card card = userHand.getCard(i);
+            System.out.printf("│        %-2s│  ", card.getRank());
+        }
+        System.out.println();
+
+        for (int i = 0; i < userHand.getDeckLength(); i++) {
+            System.out.print("└──────────┘  ");
+        }
+        System.out.println();
     }
 
 
@@ -110,7 +153,7 @@ public class User {
     }
 
 
-    public boolean userAction(String input, Card dealerCard) {
+    public boolean userAction(String input, Dealer dealer) {
         int inputInt;
         if (input == null) {
             System.out.println(
@@ -139,7 +182,7 @@ public class User {
                     .getRank())) {
                 //split
                     return true;
-                } else if (dealerCard.getRank() == "A") {
+                } else if (dealer.getDealerCard(0).getRank().equals("A")) {
                     return true;
                     //insurance
                 } else {
@@ -149,7 +192,7 @@ public class User {
                 }
                     
             }
-            else if (inputInt == 5 && dealerCard.getRank() == "A" && userHand
+            else if (inputInt == 5 && dealer.getDealerCard(0).getRank().equals("A") && userHand
                 .getCard(0).getRank().equals(userHand.getCard(1).getRank())) {
                     //insurance
                 return true;
@@ -184,15 +227,25 @@ public class User {
                 
                 
             }
-            else if (input.toLowerCase() == "split" && userHand.getCard(0)
+            else if (input.toLowerCase().equals("split") && userHand.getCard(0)
                 .getRank().equals(userHand.getCard(1).getRank())) {
                 //split
                 return true;
             }
-            else if (input.toLowerCase() == "insurance" && dealerCard
-                .getRank() == "A") {
+            else if (input.toLowerCase().equals("insurance") && dealer.getDealerCard(0)
+                .getRank().equals("A")) {
                 //insurance
-                return true;
+                if(betUserChips(currentBet/2)) {
+                    if (dealer.dealerHandValue() == 21 && dealer.getDealerHandLength() == 2) {
+
+                    } else {
+                         
+                    }
+                } else {
+                    System.out.println("You don't have enough chips to place insurance bet. Please pick another option.");
+                }
+                
+                return false;
             }
             else {
                 System.out.println(

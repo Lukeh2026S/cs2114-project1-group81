@@ -16,6 +16,7 @@ public class User {
     private ArrayList<User> splitHands = new ArrayList<>();
     private int chips;
     private int currentBet = 0;
+    private boolean insurancePlaced = false;
 
     public User(int chips) {
         this.chips = chips;
@@ -141,12 +142,12 @@ public class User {
         if (userHand.getCard(0).getRank().equals(userHand.getCard(1).getRank())
             && userHand.getDeckLength() == 2) {
             System.out.println("4. Split");
-            if (dealerCard.getRank() == "A") {
+            if (dealerCard.getRank() == "A" && !insurancePlaced) {
                 System.out.println("5. Insurance");
             }
         }
         else {
-            if (dealerCard.getRank() == "A" && userHand.getDeckLength() == 2) {
+            if (dealerCard.getRank() == "A" && userHand.getDeckLength() == 2 && !insurancePlaced) {
                 System.out.println("4. Insurance");
             }
         }
@@ -182,7 +183,7 @@ public class User {
                     .getRank())) {
                 //split
                     return true;
-                } else if (dealer.getDealerCard(0).getRank().equals("A")) {
+                } else if (dealer.getDealerCard(0).getRank().equals("A") && !insurancePlaced) {
                     //insurance
                     if(betUserChips(currentBet/2)) {
                         if (dealer.dealerHandValue() == 21 && dealer.getDealerHandLength() == 2) {
@@ -196,7 +197,7 @@ public class User {
                         return true;
                     }
                     
-                    return false;
+                    return true;
                 } else {
                     System.out.println(
                         "Please input an option or a number corresponding to an option.");
@@ -205,7 +206,7 @@ public class User {
                     
             }
             else if (inputInt == 5 && dealer.getDealerCard(0).getRank().equals("A") && userHand
-                .getCard(0).getRank().equals(userHand.getCard(1).getRank())) {
+                .getCard(0).getRank().equals(userHand.getCard(1).getRank()) && !insurancePlaced) {
                     //insurance
                 if(betUserChips(currentBet/2)) {
                     if (dealer.dealerHandValue() == 21 && dealer.getDealerHandLength() == 2) {
@@ -219,7 +220,7 @@ public class User {
                     return true;
                 }
                 
-                return false;
+                return true;
             }
             else {
                 System.out.println(
@@ -257,9 +258,10 @@ public class User {
                 return true;
             }
             else if (input.toLowerCase().equals("insurance") && dealer.getDealerCard(0)
-                .getRank().equals("A")) {
+                .getRank().equals("A") && !insurancePlaced) {
                 //insurance
                 if(betUserChips(currentBet/2)) {
+                    insurancePlaced = true;
                     if (dealer.dealerHandValue() == 21 && dealer.getDealerHandLength() == 2) {
                         chips += currentBet;
                         
@@ -271,7 +273,8 @@ public class User {
                     return true;
                 }
                 
-                return false;
+                return true;
+                
             }
             else {
                 System.out.println(

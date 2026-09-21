@@ -57,7 +57,7 @@ public class Game {
 
             // Start Round
             dealer1.addDealerCard(new Card("A", "S"));
-            dealer1.addDealerCard(new Card("3", "S"));
+            dealer1.addDealerCard(new Card("K", "S"));
             //user1.addUserCard(new Card("10", "S"));
             //user1.addUserCard(new Card("3", "H"));
             //dealer1.drawNumCards(2);

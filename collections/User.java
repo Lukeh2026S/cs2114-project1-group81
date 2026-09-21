@@ -80,7 +80,7 @@ public class User {
 
 
     public boolean betUserChips(int Chips) {
-        if(Chips < 0) {
+        if(Chips <= 0) {
             return false;
         }
         if (Chips <= chips) {
@@ -183,8 +183,20 @@ public class User {
                 //split
                     return true;
                 } else if (dealer.getDealerCard(0).getRank().equals("A")) {
-                    return true;
                     //insurance
+                    if(betUserChips(currentBet/2)) {
+                        if (dealer.dealerHandValue() == 21 && dealer.getDealerHandLength() == 2) {
+                            chips += currentBet;
+                            
+                        } else {
+                            currentBet = 0;
+                        }
+                    } else {
+                        System.out.println("You don't have enough chips to place insurance bet. Please pick another option.");
+                        return true;
+                    }
+                    
+                    return false;
                 } else {
                     System.out.println(
                         "Please input an option or a number corresponding to an option.");
@@ -195,7 +207,19 @@ public class User {
             else if (inputInt == 5 && dealer.getDealerCard(0).getRank().equals("A") && userHand
                 .getCard(0).getRank().equals(userHand.getCard(1).getRank())) {
                     //insurance
-                return true;
+                if(betUserChips(currentBet/2)) {
+                    if (dealer.dealerHandValue() == 21 && dealer.getDealerHandLength() == 2) {
+                        chips += currentBet;
+                        
+                    } else {
+                        currentBet = 0;
+                    }
+                } else {
+                    System.out.println("You don't have enough chips to place insurance bet. Please pick another option.");
+                    return true;
+                }
+                
+                return false;
             }
             else {
                 System.out.println(
@@ -237,12 +261,14 @@ public class User {
                 //insurance
                 if(betUserChips(currentBet/2)) {
                     if (dealer.dealerHandValue() == 21 && dealer.getDealerHandLength() == 2) {
-
+                        chips += currentBet;
+                        
                     } else {
-                         
+                        currentBet = 0;
                     }
                 } else {
                     System.out.println("You don't have enough chips to place insurance bet. Please pick another option.");
+                    return true;
                 }
                 
                 return false;

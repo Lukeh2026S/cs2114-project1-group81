@@ -84,8 +84,14 @@ public class Game {
             dealer1.printDealerCards(false);
             System.out.println("\nYour Cards are: ");
             user1.printUserCards();
-
-            checkWin(dealer1, user1);
+            
+            if (user1.getCurrentBet() != 0){
+                checkWin(dealer1, user1);
+            } else {
+                System.out.println("Dealer didn't have blackjack. You Lost.");
+                user1.setCurrentBet(0);
+            }
+            
             System.out.println(user1.getUserChips());
             System.out.println(user1.getCurrentBet());
             user1.shuffleUserCards();
@@ -105,10 +111,14 @@ public class Game {
                 System.out.println("\nPush.");
                 user.addUserChips(user.getCurrentBet());
             } else {
-                System.out.println("\nDealer has blcakjack. You lose.");
+                if(user.getCurrentBet() != 0) {
+                    System.out.println("\nDealer has blackjack. You have insurance and lost no money.");
+                } else {
+                    System.out.println("\nDealer has blackjack. You lose.");
+                }
             }
         } else if (user.userHandValue() == 21 && user.getUserHandLength() == 2) {
-            System.out.println("\nYou have blcakjack. You win!");
+            System.out.println("\nYou have blackjack. You win!");
             user.addUserChips((int)(user.getCurrentBet()*3.5));
         } else if (user.userHandValue() <= 21) {
             if (dealer.dealerHandValue() <= 21) {

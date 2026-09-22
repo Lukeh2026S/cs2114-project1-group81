@@ -1,33 +1,36 @@
 package collections;
 
 import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
-public class CardTest extends student.TestCase
+public class CardTest
 {
 
-    
+    @BeforeEach
     public void setUp()
     {
+        //not a setup function
         Card card = new Card("7", "H");
         assertEquals("7", card.getRank());
         assertEquals("H", card.getSuit());
 
     } 
-
+    @Test
     public void testGetSuitAndRank()   // TRY THIS AGAIN
     {
         Card card = new Card("K", "S");
         assertEquals("KS", card.getSuitAndRank());
         
     } // end of suit and rank test
-
+    @Test
     public void testGetValue()
     {
         Card card = new Card("7", "H");
         assertEquals(7, card.getValue(0));
 
     } // end of get value test
-
+    @Test
     public void testGetValueNumberCardBounds()
     {
         Card low = new Card("2", "C");
@@ -36,7 +39,7 @@ public class CardTest extends student.TestCase
         assertEquals(2, low.getValue(0));
         assertEquals(10, high.getValue(0));
     }
-
+    @Test
     public void testGetFaceCardValue()
     {
         Card jack = new Card("J", "C");
@@ -47,11 +50,11 @@ public class CardTest extends student.TestCase
         assertEquals(10, queen.getValue(0));
         assertEquals(10, king.getValue(0));
     }
-
+    @Test
     public void testGetAceValue()
     {
         Card ace = new Card("A", "S");
-        assertEquals(11, ace.getvalue(0));
+        assertEquals(11, ace.getValue(0));
         assertEquals(11, ace.getValue(15));
     }
 

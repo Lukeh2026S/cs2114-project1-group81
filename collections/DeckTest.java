@@ -1,18 +1,21 @@
 package collections;
 
 import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 /*
     test for the deck class
 */
 
-public class DeckTest extends student.TestCase
+public class DeckTest
 {
+    @Test
     public void testConstructorZeroDecks()
     {
         Deck deck = new Deck(0);
         assertEquals(0, deck.getDeckLength());
     }
-
+    @Test
     public void testConstructorOneDeck()
     {
         Deck deck = new Deck(1);
@@ -25,13 +28,13 @@ public class DeckTest extends student.TestCase
 
         assertEquals("2D", deck.getCard(13).getSuitAndRank());
     }
-
+    @Test
     public void testConstructorTwoDecks()
     {
         Deck deck = new Deck(2);
         assertEquals(104, deck.getDeckLength());
     }
-
+    @Test
     public void testGetCard()
     {
         Deck deck = new Deck(0);
@@ -41,7 +44,7 @@ public class DeckTest extends student.TestCase
         assertEquals("9H", deck.getCard(0).getSuitAndRank());
         assertEquals("QS", deck.getCard(1).getSuitAndRank());
     }
-
+    @Test
     public void testDrawCard()
     {
         Deck deck = new Deck(0);
@@ -50,11 +53,11 @@ public class DeckTest extends student.TestCase
 
         Card drawn = deck.drawCard(0);
 
-        assertEquals("9H", draw.getSuitAndRank());
+        assertEquals("9H", drawn.getSuitAndRank());
         assertEquals(1, deck.getDeckLength());
         assertEquals("QS", deck.getCard(0).getSuitAndRank());
     }
-
+    @Test
     public void testGetDeckLength()
     {
         Deck deck = new Deck(0);
@@ -62,25 +65,25 @@ public class DeckTest extends student.TestCase
         deck.addCard(new Card("3", "C"));
         assertEquals(1, deck.getDeckLength());
     }
-
+    @Test
     public void testAddCard()
     {
         Deck deck = new Deck(0);
         deck.addCard(new Card("3", "C"));
         deck.addCard(new Card("4", "D"));
 
-        asssertEquals(2, deck.getDeckLength());
+        assertEquals(2, deck.getDeckLength());
         assertEquals("3C", deck.getCard(0).getSuitAndRank());
         assertEquals("4D", deck.getCard(1).getSuitAndRank());
     }
-
+    @Test
     public void testShuffleCardSameLength()
     {
         Deck deck = new Deck(1);
         deck.shuffleCards();
         assertEquals(52, deck.getDeckLength());
     }
-
+    @Test
     public void testShuffleInDeck()
     {
         Deck main = new Deck(0);
@@ -97,13 +100,13 @@ public class DeckTest extends student.TestCase
         assertEquals("5H", main.getCard(1).getSuitAndRank());
         assertEquals("9S", main.getCard(2).getSuitAndRank());
     }
-
+    @Test
     public void testGetDeckValueEMpty()
     {
         Deck deck = new Deck(0);
         assertEquals(0, deck.getDeckValue());
     }
-
+    @Test
     public void testGetDeckValueNumberANdFaceCards()
     {
         Deck deck = new Deck(0);
@@ -113,7 +116,7 @@ public class DeckTest extends student.TestCase
         assertEquals(14, deck.getDeckValue());
 
     }
-
+    @Test
     public void testGetDeckValueSoftAce()
     {
         Deck deck = new Deck(0);
@@ -122,7 +125,7 @@ public class DeckTest extends student.TestCase
         deck.addCard(new Card("4", "D"));
         assertEquals(15, deck.getDeckValue());
     }
-
+    @Test
     public void testGetDeckValueHardAce()
     {
         Deck deck = new Deck(0);
@@ -131,9 +134,9 @@ public class DeckTest extends student.TestCase
         deck.addCard(new Card("4", "D"));
         deck.addCard(new Card("8", "S"));
         
-        assertEquals(23, deck.getDeckValue());
+        assertEquals(13, deck.getDeckValue());
     }
-
+    @Test
     public void testGetDeckValueTwoAces()
     {
         Deck deck = new Deck(0);

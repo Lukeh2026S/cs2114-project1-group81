@@ -1,15 +1,17 @@
 package collections;
 
 import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 /*
     test for the game class
 */
 
-public class GameTest extends student.TestCase
+public class GameTest
 {
     private Dealer dealer;
     private User user;
-
+    @BeforeEach
     public void setUp()
     {
         dealer = new Dealer();
@@ -17,7 +19,7 @@ public class GameTest extends student.TestCase
         Game.drawPile = new Deck(0);
         Game.discardPile = new Deck(0);
     }
-
+    @Test
     public void testCheckWinDealerCodejack()
     {
         dealer.addDealerCard(new Card("A", "S"));
@@ -34,7 +36,7 @@ public class GameTest extends student.TestCase
         assertEquals(400, user.getUserChips());
         assertEquals(0, user.getCurrentBet());
     }
-
+    @Test
     public void testCheckWInBoth()
     {
         dealer.addDealerCard(new Card("A", "S"));
@@ -51,7 +53,7 @@ public class GameTest extends student.TestCase
         assertEquals(450, user.getUserChips());
         assertEquals(0, user.getCurrentBet());
     }
-
+    @Test
     public void testCheckWinUser()
     {
         dealer.addDealerCard(new Card("10", "S"));
@@ -68,7 +70,7 @@ public class GameTest extends student.TestCase
         assertEquals(435, user.getUserChips());
         assertEquals(0, user.getCurrentBet());
     }
-
+    @Test
     public void testCheckWinUserHigherValue()
     {
         dealer.addDealerCard(new Card("10", "S"));
@@ -86,7 +88,7 @@ public class GameTest extends student.TestCase
         assertEquals(0, user.getCurrentBet());
         
     }
-
+    @Test
     public void testCheckWinDealerHigherValue()
     {
         dealer.addDealerCard(new Card("10", "S"));
@@ -103,7 +105,7 @@ public class GameTest extends student.TestCase
         assertEquals(400, user.getUserChips());
         assertEquals(0, user.getCurrentBet()); 
     }
-
+    @Test
     public void testCheckWinPushOnEqualVal()
     {
         dealer.addDealerCard(new Card("10", "S"));
@@ -121,7 +123,7 @@ public class GameTest extends student.TestCase
         assertEquals(450, user.getUserChips());
         assertEquals(0, user.getCurrentBet()); 
     }
-
+    @Test
     public void testCheckWinDealerBust()
     {
         dealer.addDealerCard(new Card("10", "S"));
@@ -139,7 +141,7 @@ public class GameTest extends student.TestCase
         assertEquals(500, user.getUserChips());
         assertEquals(0, user.getCurrentBet());
     }
-
+    @Test
     public void testCheckWinUserBusts()
     {
         dealer.addDealerCard(new Card("10", "S"));
@@ -157,7 +159,7 @@ public class GameTest extends student.TestCase
         assertEquals(400, user.getUserChips());
         assertEquals(0, user.getCurrentBet());
     }
-
+    @Test
     public void testCheckWinBothBust()
     {
         dealer.addDealerCard(new Card("10", "S"));

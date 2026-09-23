@@ -77,4 +77,43 @@ public class Deck {
         }
         return value;
     }
+    
+    public boolean printDeck(boolean hideCards) {
+        System.out.print("┌───────────┐  ".repeat(Cards.size()) + "\n");
+        if(hideCards) {
+            System.out.printf("│%-11s│  ", Cards.get(0).getRank());
+            System.out.print("│           │  ".repeat(Cards.size()-1) + "\n");
+        } else {
+            for (int i = 0; i < Cards.size(); i++) {
+                System.out.printf("│%-11s│  ", Cards.get(i).getRank());
+            }
+            System.out.println();
+        }
+        for (int j = 0; j < 2; j++) {
+            System.out.print("│           │  ".repeat(Cards.size()) + "\n");
+        }
+        if(hideCards) {
+            System.out.printf("│     %s     │  ", Cards.get(0).getSuit());
+            System.out.print("│     ?     │  ".repeat(Cards.size()-1) + "\n");
+        } else {
+            for (int i = 0; i < Cards.size(); i++) {
+                System.out.printf("│     %s     │  ", Cards.get(i).getSuit());
+            }
+            System.out.println();
+        }
+        for (int j = 0; j < 2; j++) {
+            System.out.print("│           │  ".repeat(Cards.size()) + "\n");
+        }
+        if(hideCards) {
+            System.out.printf("│%11s│  ", Cards.get(0).getRank());
+            System.out.print("│           │  ".repeat(Cards.size()-1) + "\n");
+        } else {
+            for (int i = 0; i < Cards.size(); i++) {
+                System.out.printf("│%11s│  ", Cards.get(i).getRank());
+            }
+            System.out.println();
+        }
+        System.out.print("└───────────┘  ".repeat(Cards.size()) + "\n");
+        return true;
+    }
 }

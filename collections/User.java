@@ -12,14 +12,23 @@ import java.util.*;
 
 public class User {
 
-    private Deck userHand = new Deck(0);
-    private ArrayList<User> splitHands = new ArrayList<>();
+    private Deck userHand;
+    public ArrayList<User> splitHands = new ArrayList<>();
     private int chips;
-    private int currentBet = 0;
-    private boolean insurancePlaced = false;
+    private int currentBet;
+    private int insuranceBet;
+    private boolean splitOption;
+    private boolean doubleOption;
+    private boolean insuranceOption;
 
     public User(int chips) {
+        userHand = new Deck(0);
         this.chips = chips;
+        currentBet = 0;
+        insuranceBet = 0;
+        splitOption = false;
+        doubleOption = false;
+        insuranceOption = false;
     }
 
 
@@ -58,6 +67,11 @@ public class User {
     public void setUserChips(int Chips) {
         chips = Chips;
     }
+    
+    
+    public void addUserChips(int Chips) {
+        chips += Chips;
+    }
 
 
     public int getCurrentBet() {
@@ -69,11 +83,16 @@ public class User {
         currentBet = bet;
     }
 
-
-    public void addUserChips(int Chips) {
-        chips += Chips;
+    
+    public int getInsuranceBet() {
+        return insuranceBet;
     }
-
+    
+    
+    public void setInsuranceBet(int chips) {
+        insuranceBet = chips;
+    }
+    
 
     public boolean checkSplit() {
         return splitHands.size() > 1;
@@ -93,199 +112,131 @@ public class User {
     }
 
     public void printUserCards() {
-
-        for (int i = 0; i < userHand.getDeckLength(); i++) {
-            System.out.print("┌──────────┐  ");
-        }
-        System.out.println();
-
-        for (int i = 0; i < userHand.getDeckLength(); i++) {
-            Card card = userHand.getCard(i);
-            System.out.printf("│ %-9s│  ", card.getRank());
-        }
-        System.out.println();
-
-        for (int i = 0; i < userHand.getDeckLength(); i++) {
-            System.out.print("│          │  ");
-        }
-        System.out.println();
-
-        for (int i = 0; i < userHand.getDeckLength(); i++) {
-            Card card = userHand.getCard(i);
-            System.out.printf("│     %s    │  ", card.getSuit());
-        }
-        System.out.println();
-
-        for (int i = 0; i < userHand.getDeckLength(); i++) {
-            System.out.print("│          │  ");
-        }
-        System.out.println();
-
-        for (int i = 0; i < userHand.getDeckLength(); i++) {
-            Card card = userHand.getCard(i);
-            System.out.printf("│        %-2s│  ", card.getRank());
-        }
-        System.out.println();
-
-        for (int i = 0; i < userHand.getDeckLength(); i++) {
-            System.out.print("└──────────┘  ");
-        }
-        System.out.println();
+        userHand.printDeck(false);
     }
-
 
     public void userOptions(Card dealerCard) {
-        System.out.print("1. Hit\n2. Stand");
-        if (userHand.getDeckLength() <= 2) {
-            System.out.println("\n3. Double");
-        }
-        if (userHand.getCard(0).getRank().equals(userHand.getCard(1).getRank())
-            && userHand.getDeckLength() == 2) {
-            System.out.println("4. Split");
-            if (dealerCard.getRank() == "A" && !insurancePlaced) {
-                System.out.println("5. Insurance");
-            }
-        }
-        else {
-            if (dealerCard.getRank() == "A" && userHand.getDeckLength() == 2 && !insurancePlaced) {
-                System.out.println("4. Insurance");
-            }
+        if (userHand.getDeckLength() == 2) {
+            doubleOption = true;
+            splitOption = userHand.getCard(0).getRank().equals(userHand.getCard(1).getRank())
+                && splitHands.size()<1;
+            insuranceOption = dealerCard.getRank() == "A" && insuranceBet == 0;
         }
     }
+    
+    
+     public void printUserOptions() {
+        System.out.println("1. Hit");
+        System.out.println("2. Stand");
+        if (doubleOption) {
+            System.out.println("3. Double");
+            if(splitOption) {
+                System.out.println("4. Split");
+                if(insuranceOption) {
+                    System.out.println("5. Insurance");
+                }
+            }else if(insuranceOption) {
+                System.out.println("4. Insurance");
+            }
+         }
+     }
 
 
     public boolean userAction(String input, Dealer dealer) {
         int inputInt;
         if (input == null) {
-            System.out.println(
-                "Please input an option or a number corresponding to an option.");
+            System.out.println("Please input an option or a number corresponding to an option.");
             return true;
         }
+        
         input = input.trim();
         try {
             inputInt = Integer.parseInt(input);
-            if (inputInt == 1) {
-                userHand.addCard(Game.drawPile.drawCard(0));
-                //hit
-                return true;
-            }
-            else if (inputInt == 2) {
-                //stand
-                return false;
-            }
-            else if (inputInt == 3 && userHand.getDeckLength() <= 2) {
-                userHand.addCard(Game.drawPile.drawCard(0));
-                //double
-                return false;
-            }
-            else if (inputInt == 4) {
-                if (userHand.getCard(0).getRank().equals(userHand.getCard(1)
-                    .getRank())) {
-                //split
-                    return true;
-                } else if (dealer.getDealerCard(0).getRank().equals("A") && !insurancePlaced) {
-                    //insurance
-                    if(betUserChips(currentBet/2)) {
-                        if (dealer.dealerHandValue() == 21 && dealer.getDealerHandLength() == 2) {
-                            chips += currentBet;
-                            
-                        } else {
-                            currentBet = 0;
-                        }
-                    } else {
-                        System.out.println("You don't have enough chips to place insurance bet. Please pick another option.");
-                        return true;
+            switch(inputInt) {
+                case 1: return hit();
+                case 2: return stand();
+                case 3: if(doubleOption) {return doubleOption();}
+                case 4:
+                    if(splitOption) {
+                        return split();
+                    } else if (insuranceOption) {
+                        return insurance(dealer);
                     }
-                    
+                case 5: if(insuranceOption) {return insurance(dealer);}
+                default:
+                    System.out.println("Please input an option or a number corresponding to an option.");
                     return true;
-                } else {
-                    System.out.println(
-                        "Please input an option or a number corresponding to an option.");
-                    return true;
-                }
-                    
-            }
-            else if (inputInt == 5 && dealer.getDealerCard(0).getRank().equals("A") && userHand
-                .getCard(0).getRank().equals(userHand.getCard(1).getRank()) && !insurancePlaced) {
-                    //insurance
-                if(betUserChips(currentBet/2)) {
-                    if (dealer.dealerHandValue() == 21 && dealer.getDealerHandLength() == 2) {
-                        chips += currentBet;
-                        
-                    } else {
-                        currentBet = 0;
-                    }
-                } else {
-                    System.out.println("You don't have enough chips to place insurance bet. Please pick another option.");
-                    return true;
-                }
-                
-                return true;
-            }
-            else {
-                System.out.println(
-                    "Please input an option or a number corresponding to an option.");
-                return true;
-            }
-
+            } 
         }
         catch (NumberFormatException e) {
-            if (input.toLowerCase().equals("hit")) {
-                //hit
-                userHand.addCard(Game.drawPile.drawCard(0));
-                return true;
-            }
-            else if (input.toLowerCase().equals("stand")) {
-                //stand
-                return false;
-            }
-            else if (input.toLowerCase().equals("double") && userHand.getDeckLength() <= 2 && chips >= currentBet) {
-                //double
-                if(this.betUserChips(currentBet)) {
-                    System.out.println("Bet doubled.");
-                    userHand.addCard(Game.drawPile.drawCard(0));
-                    return false;
-                } else {
-                    System.out.println("Not enough chips to double");
+            input = input.toLowerCase();
+            switch (input) {
+                case "hit": return hit();
+                case "stand": return stand();
+                case "double": if(doubleOption) {return doubleOption();}
+                case "split": if(splitOption) {return split();}
+                case "insurance": if(insuranceOption) {return insurance(dealer);}
+                default:
+                    System.out.println("Please input an option or a number corresponding to an option.");
                     return true;
-                }
-                
-                
-            }
-            else if (input.toLowerCase().equals("split") && userHand.getCard(0)
-                .getRank().equals(userHand.getCard(1).getRank())) {
-                //split
-                return true;
-            }
-            else if (input.toLowerCase().equals("insurance") && dealer.getDealerCard(0)
-                .getRank().equals("A") && !insurancePlaced) {
-                //insurance
-                if(betUserChips(currentBet/2)) {
-                    insurancePlaced = true;
-                    if (dealer.dealerHandValue() == 21 && dealer.getDealerHandLength() == 2) {
-                        chips += currentBet;
-                        
-                    } else {
-                        currentBet = 0;
-                    }
-                } else {
-                    System.out.println("You don't have enough chips to place insurance bet. Please pick another option.");
-                    return true;
-                }
-                
-                return true;
-                
-            }
-            else {
-                System.out.println(
-                    "Please input an option or a number corresponding to an option.");
-                return true;
             }
         }
     }
 
 
+    
+    private boolean hit() {
+        //hit
+        userHand.addCard(Game.drawPile.drawCard(0));
+        return true;
+    }
+    
+    private boolean stand() {
+        //stand
+        return false;
+    }
+    
+    private boolean doubleOption() {
+      //double
+        if(this.betUserChips(currentBet)) {
+            System.out.println("Bet doubled.");
+            userHand.addCard(Game.drawPile.drawCard(0));
+            return false;
+        } 
+        System.out.println("Not enough chips to double");
+        return true;
+    }
+    
+    private boolean split() {
+        if(this.betUserChips(currentBet)) {
+            int repeat = userHand.getDeckLength();
+            for(int i = 0; i < repeat; i++) {
+                splitHands.add(new User(currentBet/2));
+                splitHands.get(i).addUserCard(userHand.drawCard(0));
+                splitHands.get(i).betUserChips(currentBet/2);
+                
+            }
+            currentBet = 0;
+        } else {
+            System.out.println("Not enough chips to split");
+        }
+        return true;
+    }
+    
+    private boolean insurance(Dealer dealer) {
+        if(chips>=currentBet/2) {
+            insuranceBet = currentBet/2;
+            chips -= insuranceBet;
+        } else {
+            System.out.println("You don't have enough chips to place insurance bet. Please pick another option.");
+            return true;
+    }
+        return true;
+    }
+    
     public void shuffleUserCards() {
         Game.discardPile.shuffleInDeck(userHand);
     }
+    
+    
 }

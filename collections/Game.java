@@ -15,13 +15,15 @@ public class Game {
     
     static Deck drawPile = new Deck(NUM_OF_DECKS);
     static Deck discardPile = new Deck(0);
+    static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         //start game
         drawPile.shuffleCards();
         Dealer dealer1 = new Dealer();
         User user1 = new User(500);
-        Scanner scanner = new Scanner(System.in);
+        
+        
         gameloop:
         while(user1.getUserChips()>0){
             
@@ -33,6 +35,8 @@ public class Game {
             
             int intInput = -1;
             String exitInput;
+            
+            //chip input
             while(!user1.betUserChips(intInput)) {
                 System.out.println("Current chips: " + user1.getUserChips() + "\nHow many chips do you want to bet?");
                 exitInput = scanner.nextLine();
@@ -46,57 +50,57 @@ public class Game {
                 } catch(NumberFormatException e) {
                     if(exitInput.equals("EXIT")) {
                         break gameloop;
+                    } else if (exitInput.toLowerCase().equals("all")) {
+                        user1.betUserChips(user1.getUserChips());
+                        break;
+                    } else {
+                        System.out.println("Please enter a number.");
+                        intInput = -1;
                     }
-                    System.out.println("Please enter a number.");
-                    intInput = -1;
                 }
-                
-                    
-                
             }
 
             // Start Round
+            //dealer1.addDealerCard(new Card("6", "S"));
             //dealer1.addDealerCard(new Card("A", "S"));
-            //dealer1.addDealerCard(new Card("K", "S"));
+            
+            
             //user1.addUserCard(new Card("10", "S"));
-            //user1.addUserCard(new Card("3", "H"));
+            //user1.addUserCard(new Card("10", "H"));
             dealer1.drawNumCards(2);
             user1.drawNumCards(2);
-            String input = null;
-
-            while (user1.userAction(input, dealer1) && user1.userHandValue() <= 21) {
-                System.out.println("The dealer is showing: ");
-                dealer1.printDealerCards(true);
-                System.out.println("\nYour Cards are: ");
-                user1.printUserCards();
-                System.out.println("\nYour options are :");
-                user1.userOptions(dealer1.getDealerCard(0));
-                System.out.print("\nWhat is your choice: ");
-                input = scanner.nextLine();
-            }
-            //scanner.close();
-
+            
+            
+            //Game loop
+            Game.gameWhileLoop(dealer1, user1, 0);
+            
+            
 
             
             dealer1.dealerAction();
 
-            System.out.println("The dealer is showing: ");
+            System.out.println("The dealer1 is showing: ");
             dealer1.printDealerCards(false);
             System.out.println("\nYour Cards are: ");
             user1.printUserCards();
-            
-            if (user1.getCurrentBet() != 0){
-                checkWin(dealer1, user1);
+            if (user1.splitHands.size()>0) {
+                checkSplitWin(dealer1, user1);
+                user1.addUserChips(combineChips(user1));
             } else {
-                System.out.println("Dealer didn't have blackjack. You Lost.");
-                user1.setCurrentBet(0);
+                checkWin(dealer1, user1);
             }
-            
             System.out.println(user1.getUserChips());
             System.out.println(user1.getCurrentBet());
-            user1.shuffleUserCards();
+            if (user1.splitHands.size()>0) {
+                for(int i = 0; i< 2; i++) {
+                    System.out.println(i+1);
+                    System.out.println(user1.splitHands.get(i).getUserChips());
+                    System.out.println(user1.splitHands.get(i).getCurrentBet());
+                }
+            }
+            shuffleSplitCards(user1);
             dealer1.shuffleDealerCards();
-
+            
             
 
 
@@ -111,10 +115,12 @@ public class Game {
                 System.out.println("\nPush.");
                 user.addUserChips(user.getCurrentBet());
             } else {
-                if(user.getCurrentBet() != 0) {
-                    System.out.println("\nDealer has blackjack. You have insurance and lost no money.");
-                } else {
+                if(user.getInsuranceBet() == 0) {
                     System.out.println("\nDealer has blackjack. You lose.");
+                } else {
+                    System.out.println("\nDealer has blackjack. You have insurance and lost no money.");
+                    user.addUserChips(user.getInsuranceBet());
+                    user.addUserChips(user.getCurrentBet());
                 }
             }
         } else if (user.userHandValue() == 21 && user.getUserHandLength() == 2) {
@@ -144,5 +150,74 @@ public class Game {
             user.addUserChips(user.getCurrentBet());
         }
         user.setCurrentBet(0);
+        user.setInsuranceBet(0);
+    }
+    
+    public static void gameWhileLoop(Dealer dealer, User user, int split) {
+        String loopInput = null;
+        while (user.userAction(loopInput, dealer) ) {
+            if(user.splitHands.size()>0) {
+                for(int i = 0; i<user.splitHands.size();i++) {
+                        gameWhileLoop(dealer, user.splitHands.get(i), i);
+                    } 
+                break;
+                }
+                
+            if(split != 0) {
+                System.out.println("This is split: " + (split+1));
+            }
+            System.out.println("The dealer is showing: ");
+            dealer.printDealerCards(true);
+            System.out.println(user.getCurrentBet() + " " + user.getUserChips());
+            System.out.println("\nYour Cards are: ");
+            user.printUserCards();
+            if(user.userHandValue() > 21) {
+                if(split != 0) {
+                    System.out.println("Game ended. You busted.");
+                }
+                break;
+            }
+            System.out.println("\nYour options are :");
+            user.userOptions(dealer.getDealerCard(0));
+            user.printUserOptions();
+            System.out.print("\nWhat is your choice: ");
+            loopInput = scanner.nextLine();
+        }
+        
+    }
+    
+    public static int combineChips(User user) {
+        int finalCount = 0;
+        if(user.splitHands.size()<= 1) {
+            finalCount += user.getUserChips();
+            }
+        if(user.splitHands.size()>0) {
+            for(int i = 0; i<user.splitHands.size();i++) {
+                finalCount += combineChips(user.splitHands.get(i));
+            }
+        }
+         return finalCount;
+    }
+    
+    public static void checkSplitWin(Dealer dealer, User user) {
+        if(user.splitHands.size()>0) {
+            for(int i = 0; i<user.splitHands.size();i++) {
+                checkSplitWin(dealer, user.splitHands.get(i));
+            }
+        } else {
+            checkWin(dealer, user);
+        }   
+    }
+    
+    public static void shuffleSplitCards(User user) {
+        if(user.splitHands.size()>0) {
+            for(int i = 0; i<user.splitHands.size();i++) {
+                user.splitHands.get(i).shuffleUserCards();
+            }
+            user.splitHands.clear();
+        } else {
+            user.shuffleUserCards();
+        }   
     }
 }
+

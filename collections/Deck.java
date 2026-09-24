@@ -2,10 +2,12 @@
 // Virginia Tech Honor Code Pledge:
 //
 // As a Hokie, I will conduct myself with honor and integrity at all times.
-// I will not lie, cheat, or steal, nor will I accept the actions of those who do.
+// I will not lie, cheat, or steal, nor will I accept the actions of those who
+// do.
 // -- Mayank Rudraraju, Luke Hill, Abigel Daniel
 // LLM Statement:
-//I have not used any assistance for the assignment beyond course resources and staff.
+// I have not used any assistance for the assignment beyond course resources and
+// staff.
 package collections;
 
 import java.util.*;
@@ -60,7 +62,7 @@ public class Deck {
             Cards.add(deck1.drawCard(0));
         }
     }
-   
+
 
     public int getDeckValue() {
         int value = 0;
@@ -77,13 +79,15 @@ public class Deck {
         }
         return value;
     }
-    
+
+
     public boolean printDeck(boolean hideCards) {
         System.out.print("┌───────────┐  ".repeat(Cards.size()) + "\n");
-        if(hideCards) {
+        if (hideCards) {
             System.out.printf("│%-11s│  ", Cards.get(0).getRank());
-            System.out.print("│           │  ".repeat(Cards.size()-1) + "\n");
-        } else {
+            System.out.print("│           │  ".repeat(Cards.size() - 1) + "\n");
+        }
+        else {
             for (int i = 0; i < Cards.size(); i++) {
                 System.out.printf("│%-11s│  ", Cards.get(i).getRank());
             }
@@ -92,10 +96,11 @@ public class Deck {
         for (int j = 0; j < 2; j++) {
             System.out.print("│           │  ".repeat(Cards.size()) + "\n");
         }
-        if(hideCards) {
+        if (hideCards) {
             System.out.printf("│     %s     │  ", Cards.get(0).getSuit());
-            System.out.print("│     ?     │  ".repeat(Cards.size()-1) + "\n");
-        } else {
+            System.out.print("│     ?     │  ".repeat(Cards.size() - 1) + "\n");
+        }
+        else {
             for (int i = 0; i < Cards.size(); i++) {
                 System.out.printf("│     %s     │  ", Cards.get(i).getSuit());
             }
@@ -104,10 +109,11 @@ public class Deck {
         for (int j = 0; j < 2; j++) {
             System.out.print("│           │  ".repeat(Cards.size()) + "\n");
         }
-        if(hideCards) {
+        if (hideCards) {
             System.out.printf("│%11s│  ", Cards.get(0).getRank());
-            System.out.print("│           │  ".repeat(Cards.size()-1) + "\n");
-        } else {
+            System.out.print("│           │  ".repeat(Cards.size() - 1) + "\n");
+        }
+        else {
             for (int i = 0; i < Cards.size(); i++) {
                 System.out.printf("│%11s│  ", Cards.get(i).getRank());
             }

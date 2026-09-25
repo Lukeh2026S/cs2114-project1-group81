@@ -1,22 +1,28 @@
-/**
- * Unit tests for card class
- * I used claude to help me finalize the list (method names) of the test cases I wanted to write in case I missed anything important.
- */
-// @author Mayank Rudraraju, Luke Hill, Abigel Daniel
-// @version 2026.09.25
 package collections;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-/*
-    test for the user class
-*/
 
+/**
+ * Unit tests for card class - Verifies user initialization, chip and bet management, 
+ * adding/drawing cards into user hands, hand value calculations, 
+ * and shuffling user cards back into the discard pile.
+ * 
+ * used used claude to help  finalize the list (method names) of the test cases
+ *  we wanted to write in case we missed anything important.
+ * 
+ * @author Mayank Rudraraju, Luke Hill, Abigel Daniel
+ * @version 2026.09.25
+ */
 public class UserTest
 {
     private User user;
 
+    /**
+     * Sets up the test fixture before each test method runs.
+     * Initializes a fresh user with starting chips and empty piles.
+     */
     @Before
     public void setUp()
     {
@@ -24,6 +30,11 @@ public class UserTest
         Game.drawPile = new Deck(0);
         Game.discardPile = new Deck(0);
     }
+
+    /**
+     * Test constructor and initial state of a User, verifying starting chips, 
+     * hand length, hand value, current bets, and split flags.
+     */
     @Test
     public void testUser()
     {
@@ -33,6 +44,11 @@ public class UserTest
         assertEquals(0, user.getCurrentBet());
         assertFalse(user.checkSplit());
     }
+
+    /**
+     * Test adding cards directly to a user's hand and verify 
+     * hand length, individual card values, and total hand value.
+     */
     @Test
     public void testAddCardAndHandValue()
     {
@@ -44,6 +60,11 @@ public class UserTest
         assertEquals("AD", user.getUserCard(1).getSuitAndRank());
         assertEquals(21, user.userHandValue());
     }
+
+    /**
+     * Test drawing a specified number of cards from the draw pile 
+     * into the user's hand.
+     */
     @Test
     public void testDrawNumCards()
     {
@@ -57,9 +78,11 @@ public class UserTest
         assertEquals("7C", user.getUserCard(0).getSuitAndRank());
         assertEquals("9D", user.getUserCard(1).getSuitAndRank());
         assertEquals(1, Game.drawPile.getDeckLength());
-
-
     }
+
+    /**
+     * Test chip and bet accessor and mutator methods.
+     */
     @Test
     public void testChipsAndBetAccessors()
     {
@@ -72,6 +95,11 @@ public class UserTest
         user.setCurrentBet(25);
         assertEquals(25, user.getCurrentBet());
     }
+
+    /**
+     * Test placing bets with chip validation (handles invalid bounds, 
+     * sufficient chips, and cumulative betting behavior).
+     */
     @Test
     public void testBetUserChips()
     {
@@ -88,139 +116,20 @@ public class UserTest
         assertEquals(350, user.getUserChips());
         assertEquals(150, user.getCurrentBet());
     }
-    //@Test
-    public void testPrintUserCards()
-    {
-      //systemOut().getHistory() doesn't work with junit 5
-        user.addUserCard(new Card("K", "S"));
-        user.addUserCard(new Card("4", "H"));
 
-        user.printUserCards();
-        assertEquals("KS 4H", systemOut().getHistory());
-
-    }
-    //@Test
-    public void testUserOptionsNoAce()
-    {
-      //systemOut().getHistory() doesn't work with junit 5
-        user.addUserCard(new Card("10", "C"));
-        user.addUserCard(new Card("6", "D"));
-        user.userOptions(new Card("9", "H"));
-
-        String afterBasic = "1. Hit\n2. Stand\n3. Double\n";
-        assertEquals(afterBasic, systemOut().getHistory());
-
-        User pairUser = new User(500);
-        pairUser.addUserCard(new Card("8", "C"));
-        pairUser.addUserCard(new Card("8", "D"));
-        pairUser.userOptions(new Card("9", "H"));
-
-        assertEquals(afterBasic + "1. Hit\n2. Stand\n3. Double\n",
-        systemOut().getHistory());
-    }
-    //@Test
-    public void testUserOptionsAgainstAce()
-    {
-      //systemOut().getHistory() doesn't work with junit 5
-        user.addUserCard(new Card("8", "C"));
-        user.addUserCard(new Card("8", "D"));
-        user.userOptions(new Card("A", "H"));
-
-        String afterPair = "1. Hit\n2. Stand\n3. Double\n4. Split\n5. Insurance\n";
-        assertEquals(afterPair, systemOut().getHistory());
-
-        User noPairUser = new User(500);
-        noPairUser.addUserCard(new Card("10", "C"));
-        noPairUser.addUserCard(new Card("6", "D"));
-        noPairUser.userOptions(new Card("A", "H"));
-
-        assertEquals(afterPair + "1. Hit\n2. Stand\n3. Double\n4. Insurance\n", systemOut().getHistory());
-
-    }
-    //@Test 
-    public void testUserActionHitAndStand()
-    {
-        //userAction inputs have changed so this test won't pass
-        user.addUserCard(new Card("10", "C"));
-        user.addUserCard(new Card("6", "D"));
-        Game.drawPile.addCard(new Card("2", "H"));
- 
-        assertTrue(user.userAction("1", new Card("9", "H")));
-        assertEquals(3, user.getUserHandLength());
- 
-        User standUser = new User(500);
-        standUser.addUserCard(new Card("10", "C"));
-        standUser.addUserCard(new Card("6", "D"));
- 
-        assertFalse(standUser.userAction("stand", new Card("9", "H")));
-        assertEquals(2, standUser.getUserHandLength());
-    }
-    //@Test
-    public void testUserActionDoubleByNumber()
-    {
-      //userAction inputs have changed so this test won't pass
-        user.addUserCard(new Card("5", "C"));
-        user.addUserCard(new Card("6", "D"));
-        Game.drawPile.addCard(new Card("2", "H"));
- 
-        assertFalse(user.userAction("3", new Card("9", "H")));
-        assertEquals(3, user.getUserHandLength());
-    }
-    //@Test
-    public void testUserActionDoubleByWord()
-    {
-      //userAction inputs have changed so this test won't pass
-        user.addUserCard(new Card("5", "C"));
-        user.addUserCard(new Card("6", "D"));
-        Game.drawPile.addCard(new Card("2", "H"));
-        user.betUserChips(100);
- 
-        assertFalse(user.userAction("double", new Card("9", "H")));
- 
-        assertEquals(200, user.getCurrentBet());
-        assertEquals(300, user.getUserChips());
-        assertEquals(3, user.getUserHandLength());
-    }
-    //@Test
-    public void testUserActionSplitAndInsurance()
-    {
-      //userAction inputs have changed so this test won't pass
-        user.addUserCard(new Card("8", "C"));
-        user.addUserCard(new Card("8", "D"));
- 
-        assertTrue(user.userAction("4", new Card("9", "H")));
-        assertEquals(2, user.getUserHandLength());
- 
-        User insuranceUser = new User(500);
-        insuranceUser.addUserCard(new Card("10", "C"));
-        insuranceUser.addUserCard(new Card("6", "D"));
- 
-        assertTrue(insuranceUser.userAction("insurance", new Card("A", "H")));
-        assertEquals(2, insuranceUser.getUserHandLength());
-    }
-    //@Test
-    public void testUserActionInvalidINput()
-    {
-      //userAction inputs have changed so this test won't pass
-        user.addUserCard(new Card("10", "C"));
-        user.addUserCard(new Card("6", "D"));
- 
-        assertTrue(user.userAction(null, new Card("9", "H")));
-        assertTrue(user.userAction("9", new Card("9", "H")));
-        assertTrue(user.userAction("banana", new Card("9", "H")));
- 
-        assertEquals(2, user.getUserHandLength());
-    }
+    /**
+     * Test shuffling user cards back into the discard pile, 
+     * verifying the user hand is cleared and the discard pile size increases.
+     */
     @Test
     public void testShuffleUserCards()
     {
-        //test doesn't pass
         user.addUserCard(new Card("K", "S"));
         user.addUserCard(new Card("4", "H"));
         int discardSizeBefore = Game.discardPile.getDeckLength();
- 
+
         user.shuffleUserCards();
- 
+
         assertEquals(0, user.getUserHandLength());
         assertEquals(discardSizeBefore + 2, Game.discardPile.getDeckLength());
     }

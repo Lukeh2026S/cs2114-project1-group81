@@ -1,4 +1,15 @@
-
+// Project 1
+// Virginia Tech Honor Code Pledge:
+//
+// As a Hokie, I will conduct myself with honor and integrity at all times.
+// I will not lie, cheat, or steal, nor will I accept the actions of those who
+// do.
+// -- Mayank Rudraraju, Luke Hill, Abigel Daniel
+// @author Mayank Rudraraju, Luke Hill, Abigel Daniel
+// @version 2026.09.25
+// LLM Statement:
+// I have not used any assistance for the assignment beyond course resources and
+// staff, and AI tools utilized for formatting and reviewing tester methods.
 package collections;
 
 import static org.junit.Assert.*;

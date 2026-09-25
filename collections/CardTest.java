@@ -9,7 +9,7 @@ import org.junit.Test;
  * used claude to help me finalize the list (method names) of the 
  * test cases I wanted to write in case we missed anything important.
  * @author Mayank Rudraraju, Luke Hill, Abigel Daniel
- * @version 2026.03.25
+ * @version 2026.09.25
  */
 public class CardTest {
 

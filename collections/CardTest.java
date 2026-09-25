@@ -7,7 +7,7 @@ import org.junit.Test;
  * Test class for Card. Verifies getters, suit/rank combinations, 
  * and value calculations for numbers, face cards, and aces.
  * used claude to help me finalize the list (method names) of the 
- * test cases I wanted to write in case we missed anything important.
+ * test cases wanted to write in case we missed anything important.
  * @author Mayank Rudraraju, Luke Hill, Abigel Daniel
  * @version 2026.09.25
  */

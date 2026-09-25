@@ -15,7 +15,7 @@ package collections;
 /**
  * Dealer which holds dealer hand and methods to modify it.
  * 
- * @author Luke Hill
+ * @author Luke Hill, Mayank Rudraraju, Abigel Daniel
  * @version 2026.24.9
  */
 public class Dealer {

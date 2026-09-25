@@ -17,7 +17,7 @@ import java.util.*;
 /**
  * Class that interacts with all others and runs game loop.
  * 
- * @author Luke Hill
+ * @author Luke Hill, Mayank Rudraraju, Abigel Daniel
  * @version 2026.24.9
  */
 public class Game {

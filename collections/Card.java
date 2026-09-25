@@ -15,7 +15,7 @@ package collections;
 /**
  * Card class which is an object that imitates a card.
  * 
- * @author Luke Hill
+ * @author Luke Hill, Mayank Rudraraju, Abigel Daniel
  * @version 2026.24.9
  */
 public class Card {

@@ -17,7 +17,7 @@ import java.util.*;
 /**
  * The user class that has methods for user functions.
  * 
- * @author Luke Hill
+ * @author Luke Hill, Mayank Rudraraju, Abigel Daniel
  * @version 2026.24.9
  */
 public class User {

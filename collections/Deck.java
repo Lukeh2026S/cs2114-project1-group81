@@ -18,7 +18,7 @@ import java.util.*;
  * The deck class that has methods decks like user and dealer hands and draw and
  * discard piles.
  * 
- * @author Luke Hill
+ * @author Luke Hill, Mayank Rudraraju, Abigel Daniel
  * @version 2026.24.9
  */
 public class Deck {

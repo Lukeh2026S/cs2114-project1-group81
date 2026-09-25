@@ -109,15 +109,6 @@ public class Game {
             else {
                 checkWin(dealer1, user1);
             }
-            System.out.println(user1.getUserChips());
-            System.out.println(user1.getCurrentBet());
-            if (user1.splitHands.size() > 0) {
-                for (int i = 0; i < 2; i++) {
-                    System.out.println(i + 1);
-                    System.out.println(user1.splitHands.get(i).getUserChips());
-                    System.out.println(user1.splitHands.get(i).getCurrentBet());
-                }
-            }
             shuffleSplitCards(user1);
             dealer1.shuffleDealerCards();
 
@@ -208,8 +199,6 @@ public class Game {
             }
             System.out.println("The dealer is showing: ");
             dealer.printDealerCards(true);
-            System.out.println(user.getCurrentBet() + " " + user
-                .getUserChips());
             System.out.println("\nYour Cards are: ");
             user.printUserCards();
             if (user.userHandValue() > 21) {

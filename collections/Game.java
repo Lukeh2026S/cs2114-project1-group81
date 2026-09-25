@@ -12,13 +12,35 @@ package collections;
 
 import java.util.*;
 
+/**
+ * Class that interacts with all others and runs game loop.
+ * 
+ * @author Luke Hill
+ * @version 2026.24.9
+ */
 public class Game {
+    /**
+     * The amount of decks that are in play.
+     */
     static final int NUM_OF_DECKS = 2;
-
+    /**
+     * The draw pile that all cards are drawn from.
+     */
     static Deck drawPile = new Deck(NUM_OF_DECKS);
+    /**
+     * The list of cards that holds cards that are discarded.
+     */
     static Deck discardPile = new Deck(0);
+    /**
+     * The scanner that detects input.
+     */
     static Scanner scanner = new Scanner(System.in);
 
+    /**
+     * The method main that runs everything.
+     * 
+     * @param args
+     */
     public static void main(String[] args) {
         // start game
         drawPile.shuffleCards();
@@ -68,11 +90,6 @@ public class Game {
             }
 
             // Start Round
-            // dealer1.addDealerCard(new Card("6", "S"));
-            // dealer1.addDealerCard(new Card("A", "S"));
-
-            // user1.addUserCard(new Card("10", "S"));
-            // user1.addUserCard(new Card("10", "H"));
             dealer1.drawNumCards(2);
             user1.drawNumCards(2);
 
@@ -109,6 +126,12 @@ public class Game {
     }
 
 
+    /**
+     * Checks the dealers and users cards to see who won.
+     * 
+     * @param dealer
+     * @param user
+     */
     public static void checkWin(Dealer dealer, User user) {
         if (dealer.dealerHandValue() == 21 && dealer
             .getDealerHandLength() == 2) {
@@ -163,6 +186,13 @@ public class Game {
     }
 
 
+    /**
+     * The actual game loop for playing blackjack.
+     * 
+     * @param dealer
+     * @param user
+     * @param split
+     */
     public static void gameWhileLoop(Dealer dealer, User user, int split) {
         String loopInput = null;
         while (user.userAction(loopInput, dealer)) {
@@ -198,6 +228,12 @@ public class Game {
     }
 
 
+    /**
+     * Combines the chips of a split hand.
+     * 
+     * @param user
+     * @return split hand chip count
+     */
     public static int combineChips(User user) {
         int finalCount = 0;
         if (user.splitHands.size() <= 1) {
@@ -212,6 +248,12 @@ public class Game {
     }
 
 
+    /**
+     * Combines the win state of a split hand.
+     * 
+     * @param dealer
+     * @param user
+     */
     public static void checkSplitWin(Dealer dealer, User user) {
         if (user.splitHands.size() > 0) {
             for (int i = 0; i < user.splitHands.size(); i++) {
@@ -224,6 +266,11 @@ public class Game {
     }
 
 
+    /**
+     * Shuffles the split cards back into discard pile.
+     * 
+     * @param user
+     */
     public static void shuffleSplitCards(User user) {
         if (user.splitHands.size() > 0) {
             for (int i = 0; i < user.splitHands.size(); i++) {

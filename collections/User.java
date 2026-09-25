@@ -12,9 +12,18 @@ package collections;
 
 import java.util.*;
 
+/**
+ * The user class that has methods for user functions.
+ * 
+ * @author Luke Hill
+ * @version 2026.24.9
+ */
 public class User {
 
     private Deck userHand;
+    /**
+     * The list that holds the users created when hand is split.
+     */
     public ArrayList<User> splitHands = new ArrayList<>();
     private int chips;
     private int currentBet;
@@ -24,6 +33,11 @@ public class User {
     private boolean insuranceOption;
     private boolean split;
 
+    /**
+     * Constructor for user class.
+     * 
+     * @param chips
+     */
     public User(int chips) {
         userHand = new Deck(0);
         this.chips = chips;
@@ -36,6 +50,10 @@ public class User {
     }
 
 
+    /**
+     * Constructor for user class with overloaded value so split hands are
+     * different.
+     */
     public User() {
         userHand = new Deck(0);
         currentBet = 0;
@@ -47,6 +65,11 @@ public class User {
     }
 
 
+    /**
+     * Draws a certain number of cards to users hand.
+     * 
+     * @param num
+     */
     public void drawNumCards(int num) {
         for (int i = 0; i < num; i++) {
             userHand.addCard(Game.drawPile.drawCard(0));
@@ -54,66 +77,135 @@ public class User {
     }
 
 
+    /**
+     * Gets user hand length
+     * 
+     * @return user hand length.
+     */
     public int getUserHandLength() {
         return userHand.getDeckLength();
     }
 
 
+    /**
+     * Gets user hand value.
+     * 
+     * @return value of user hand
+     */
     public int userHandValue() {
         return userHand.getDeckValue();
     }
 
 
+    /**
+     * Gets a card at a position in user hand.
+     * 
+     * @param cardNum
+     * @return card at position
+     * 
+     */
     public Card getUserCard(int cardNum) {
         return userHand.getCard(cardNum);
     }
 
 
+    /**
+     * Adds card to user hand.
+     * 
+     * @param card
+     */
     public void addUserCard(Card card) {
         userHand.addCard(card);
     }
 
 
+    /**
+     * Gets user chips.
+     * 
+     * @return user chips
+     */
     public int getUserChips() {
         return chips;
     }
 
 
+    /**
+     * Sets user chips
+     * 
+     * @param Chips
+     */
     public void setUserChips(int Chips) {
         chips = Chips;
     }
 
 
+    /**
+     * Add user chips.
+     * 
+     * @param Chips
+     */
     public void addUserChips(int Chips) {
         chips += Chips;
     }
 
 
+    /**
+     * Gets current bet.
+     * 
+     * @return current bet
+     */
     public int getCurrentBet() {
         return currentBet;
     }
 
 
+    /**
+     * Sets current bet.
+     * 
+     * @param bet
+     */
     public void setCurrentBet(int bet) {
         currentBet = bet;
     }
 
 
+    /**
+     * Gets insurance bet.
+     * 
+     * @return insurance bet
+     */
     public int getInsuranceBet() {
         return insuranceBet;
     }
 
 
+    /**
+     * Sets insurance bet
+     * 
+     * @param chips
+     */
     public void setInsuranceBet(int chips) {
         insuranceBet = chips;
     }
 
 
+    /**
+     * Check if the user split.
+     * 
+     * @return user split
+     */
     public boolean checkSplit() {
         return splitHands.size() > 1;
     }
 
 
+    /**
+     * Bets an amount of chips and adds the to current bet while subtracting
+     * from chips.
+     * 
+     * @param Chips
+     * @return if you have enough chips or not
+     */
     public boolean betUserChips(int Chips) {
         if (Chips <= 0) {
             return false;
@@ -127,11 +219,19 @@ public class User {
     }
 
 
+    /**
+     * Prints user cards
+     */
     public void printUserCards() {
         userHand.printDeck(false);
     }
 
 
+    /**
+     * Sets the values of the booleans for the user options
+     * 
+     * @param dealerCard
+     */
     public void userOptions(Card dealerCard) {
         if (!split) {
             if (userHand.getDeckLength() == 2) {
@@ -145,6 +245,9 @@ public class User {
     }
 
 
+    /**
+     * Prints the options the user can do.
+     */
     public void printUserOptions() {
         System.out.println("1. Hit");
         System.out.println("2. Stand");
@@ -163,6 +266,14 @@ public class User {
     }
 
 
+    /**
+     * Checks input and does the method they input says or prints that its not
+     * an option.
+     * 
+     * @param input
+     * @param dealer
+     * @return if the loop is over
+     */
     public boolean userAction(String input, Dealer dealer) {
         int inputInt;
         if (input == null) {
@@ -285,6 +396,9 @@ public class User {
     }
 
 
+    /**
+     * Shuffles cards from user hand to discard pile.
+     */
     public void shuffleUserCards() {
         Game.discardPile.shuffleInDeck(userHand);
     }

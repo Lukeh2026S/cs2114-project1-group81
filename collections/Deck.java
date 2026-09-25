@@ -12,11 +12,23 @@ package collections;
 
 import java.util.*;
 
+/**
+ * The deck class that has methods decks like user and dealer hands and draw and
+ * discard piles.
+ * 
+ * @author Luke Hill
+ * @version 2026.24.9
+ */
 public class Deck {
     private ArrayList<Card> Cards = new ArrayList<>();
     private final String[] suits = { "C", "D", "H", "S" };
     private final String[] specialCards = { "J", "Q", "K", "A" };
 
+    /**
+     * Constructor for deck class.
+     * 
+     * @param numOfDecks
+     */
     public Deck(int numOfDecks) {
         for (int i = 0; i < numOfDecks; i++) {
             for (int s = 0; s < suits.length; s++) {
@@ -31,31 +43,61 @@ public class Deck {
     }
 
 
+    /**
+     * Gets card from deck at int position.
+     * 
+     * @param cardNum
+     * @return card at position
+     */
     public Card getCard(int cardNum) {
         return Cards.get(cardNum);
     }
 
 
+    /**
+     * Removes card from position of deck and returns it.
+     * 
+     * @param cardNum
+     * @return card drawn
+     */
     public Card drawCard(int cardNum) {
         return Cards.remove(cardNum);
     }
 
 
+    /**
+     * Gets deck length.
+     * 
+     * @return deck length
+     */
     public int getDeckLength() {
         return Cards.size();
     }
 
 
+    /**
+     * Adds card to deck.
+     * 
+     * @param card
+     */
     public void addCard(Card card) {
         Cards.add(card);
     }
 
 
+    /**
+     * Shuffles cards
+     */
     public void shuffleCards() {
         Collections.shuffle(Cards);
     }
 
 
+    /**
+     * Shuffles two decks into one.
+     * 
+     * @param deck1
+     */
     public void shuffleInDeck(Deck deck1) {
         int len = deck1.getDeckLength();
         for (int i = 0; i < len; i++) {
@@ -64,6 +106,11 @@ public class Deck {
     }
 
 
+    /**
+     * Returns the value of a deck based on rules.
+     * 
+     * @return value of deck
+     */
     public int getDeckValue() {
         int value = 0;
         int aces = 0;
@@ -81,7 +128,12 @@ public class Deck {
     }
 
 
-    public boolean printDeck(boolean hideCards) {
+    /**
+     * Prints out each card next to each other.
+     * 
+     * @param hideCards
+     */
+    public void printDeck(boolean hideCards) {
         System.out.print("┌───────────┐  ".repeat(Cards.size()) + "\n");
         if (hideCards) {
             System.out.printf("│%-11s│  ", Cards.get(0).getRank());
@@ -120,6 +172,6 @@ public class Deck {
             System.out.println();
         }
         System.out.print("└───────────┘  ".repeat(Cards.size()) + "\n");
-        return true;
+
     }
 }

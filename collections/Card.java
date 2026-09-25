@@ -10,31 +10,64 @@
 // staff.
 package collections;
 
+/**
+ * Card class which is an object that imitates a card.
+ * 
+ * @author Luke Hill
+ * @version 2026.24.9
+ */
 public class Card {
     private String suit;
     private String rank;
 
+    /**
+     * Constructor of card class.
+     * 
+     * @param rank
+     * @param suit
+     */
     public Card(String rank, String suit) {
         this.suit = suit;
         this.rank = rank;
     }
 
 
+    /**
+     * Returns rank of a card.
+     * 
+     * @return suit
+     */
     public String getSuit() {
         return suit;
     }
 
 
+    /**
+     * Returns rank of a card.
+     * 
+     * @return rank
+     */
     public String getRank() {
         return rank;
     }
 
 
+    /**
+     * Returns suit and rank of a card.
+     * 
+     * @return suit and rank together
+     */
     public String getSuitAndRank() {
         return rank + suit;
     }
 
 
+    /**
+     * Gets value of a card.
+     * 
+     * @param currentScore
+     * @return value of card
+     */
     public int getValue(int currentScore) {
         try {
             return Integer.parseInt(rank);

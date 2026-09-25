@@ -1,18 +1,26 @@
-// @author Mayank Rudraraju, Luke Hill, Abigel Daniel
-// @version 2026.09.25
 package collections;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-/*
-    test for the game class
-*/
 
+/**
+ * Test class for Game. Verifies various win, loss, and push conditions 
+ * handled by the checkWin method, including natural blackjacks, busts, 
+ * pushes, and standard card value comparisons.
+ * 
+ * @author Mayank Rudraraju, Luke Hill, Abigel Daniel
+ * @version 2026.03.25
+ */
 public class GameTest
 {
     private Dealer dealer;
     private User user;
+
+    /**
+     * Sets up the test fixture before each test method runs.
+     * Initializes a fresh dealer, user with starting chips, and empty piles.
+     */
     @Before
     public void setUp()
     {
@@ -21,8 +29,13 @@ public class GameTest
         Game.drawPile = new Deck(0);
         Game.discardPile = new Deck(0);
     }
+
+    /**
+     * Test checkWin when the dealer has a natural blackjack 
+     * and the user loses their bet.
+     */
     @Test
-    public void testCheckWinDealerCodejack()
+    public void testCheckWinDealerBlackjack()
     {
         dealer.addDealerCard(new Card("A", "S"));
         dealer.addDealerCard(new Card("K", "H"));
@@ -38,8 +51,12 @@ public class GameTest
         assertEquals(400, user.getUserChips());
         assertEquals(0, user.getCurrentBet());
     }
+
+    /**
+     * Test checkWin when both the dealer and user have natural blackjacks (push).
+     */
     @Test
-    public void testCheckWInBoth()
+    public void testCheckWinBoth()
     {
         dealer.addDealerCard(new Card("A", "S"));
         dealer.addDealerCard(new Card("K", "H"));
@@ -55,6 +72,11 @@ public class GameTest
         assertEquals(450, user.getUserChips());
         assertEquals(0, user.getCurrentBet());
     }
+
+    /**
+     * Test checkWin when only the user has a natural blackjack 
+     * and wins with a blackjack payout.
+     */
     @Test
     public void testCheckWinUser()
     {
@@ -72,6 +94,10 @@ public class GameTest
         assertEquals(435, user.getUserChips());
         assertEquals(0, user.getCurrentBet());
     }
+
+    /**
+     * Test checkWin when the user has a higher hand value than the dealer without busting.
+     */
     @Test
     public void testCheckWinUserHigherValue()
     {
@@ -88,8 +114,11 @@ public class GameTest
 
         assertEquals(500, user.getUserChips());
         assertEquals(0, user.getCurrentBet());
-        
     }
+
+    /**
+     * Test checkWin when the dealer has a higher hand value than the user.
+     */
     @Test
     public void testCheckWinDealerHigherValue()
     {
@@ -107,6 +136,10 @@ public class GameTest
         assertEquals(400, user.getUserChips());
         assertEquals(0, user.getCurrentBet()); 
     }
+
+    /**
+     * Test checkWin when both the dealer and user end up with equal hand values (push).
+     */
     @Test
     public void testCheckWinPushOnEqualVal()
     {
@@ -125,6 +158,10 @@ public class GameTest
         assertEquals(450, user.getUserChips());
         assertEquals(0, user.getCurrentBet()); 
     }
+
+    /**
+     * Test checkWin when the dealer busts, resulting in a win for the user.
+     */
     @Test
     public void testCheckWinDealerBust()
     {
@@ -143,6 +180,10 @@ public class GameTest
         assertEquals(500, user.getUserChips());
         assertEquals(0, user.getCurrentBet());
     }
+
+    /**
+     * Test checkWin when the user busts before the dealer.
+     */
     @Test
     public void testCheckWinUserBusts()
     {
@@ -161,6 +202,10 @@ public class GameTest
         assertEquals(400, user.getUserChips());
         assertEquals(0, user.getCurrentBet());
     }
+
+    /**
+     * Test checkWin when both the dealer and user bust.
+     */
     @Test
     public void testCheckWinBothBust()
     {
@@ -180,6 +225,5 @@ public class GameTest
         assertEquals(450, user.getUserChips());
         assertEquals(0, user.getCurrentBet());
     }
-
 
 } // end of game test case

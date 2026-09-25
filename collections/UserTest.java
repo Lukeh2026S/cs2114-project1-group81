@@ -5,8 +5,8 @@
 package collections;
 
 import static org.junit.Assert.*;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Before;
+import org.junit.Test;
 /*
     test for the user class
 */
@@ -15,7 +15,7 @@ public class UserTest
 {
     private User user;
     
-    @BeforeEach
+    @Before
     public void setUp()
     {
         user = new User(500);

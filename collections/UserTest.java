@@ -1,3 +1,7 @@
+/**
+ * Unit tests for card class
+ * I used claude to help me finalize the list (method names) of the test cases I wanted to write in case I missed anything important.
+ */
 package collections;
 
 import static org.junit.Assert.*;

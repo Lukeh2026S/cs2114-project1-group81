@@ -9,7 +9,7 @@
 // @version 2026.09.25
 // LLM Statement:
 // I have not used any assistance for the assignment beyond course resources and
-// staff.
+// staff, and AI tools utilized for formatting and reviewing tester methods.
 package collections;
 
 /**

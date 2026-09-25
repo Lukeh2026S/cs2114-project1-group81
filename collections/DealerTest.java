@@ -1,8 +1,8 @@
 package collections;
 
 import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test class for Dealer. Verifies the constructor, adding cards, 
@@ -20,7 +20,7 @@ public class DealerTest
      * Sets up the test fixture before each test method runs.
      * Initializes a fresh dealer and empty draw/discard piles.
      */
-    @Before
+    @BeforeEach
     public void setUp()
     {
         dealer = new Dealer();

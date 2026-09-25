@@ -1,7 +1,8 @@
 package collections;
 
 import static org.junit.Assert.*;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test class for Card. Verifies getters, suit/rank combinations, 

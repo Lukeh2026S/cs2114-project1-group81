@@ -1,8 +1,8 @@
 package collections;
 
 import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test class for Game. Verifies various win, loss, and push conditions 
@@ -21,7 +21,7 @@ public class GameTest
      * Sets up the test fixture before each test method runs.
      * Initializes a fresh dealer, user with starting chips, and empty piles.
      */
-    @Before
+    @BeforeEach
     public void setUp()
     {
         dealer = new Dealer();

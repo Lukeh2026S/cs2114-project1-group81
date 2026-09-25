@@ -1,8 +1,8 @@
 package collections;
 
 import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Unit tests for card class - Verifies user initialization, chip and bet management, 
@@ -23,7 +23,7 @@ public class UserTest
      * Sets up the test fixture before each test method runs.
      * Initializes a fresh user with starting chips and empty piles.
      */
-    @Before
+    @BeforeEach
     public void setUp()
     {
         user = new User(500);

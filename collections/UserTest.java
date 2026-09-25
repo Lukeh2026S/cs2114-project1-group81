@@ -8,8 +8,13 @@
 // @author Mayank Rudraraju, Luke Hill, Abigel Daniel
 // @version 2026.09.25
 // LLM Statement:
-// I have not used any assistance for the assignment beyond course resources and
-// staff, and AI tools utilized for formatting and reviewing tester methods.
+//
+// During the preparation of this assignment, I, Mayank Rudraraju, Luke Hill, Abigel Daniel used Claude 
+// in Test classes to debug and format.
+// After using this tool, I reviewed and edited the content as needed to ensure its
+// accuracy and take full responsibility for the content in relation to grading. I understand
+// that I am responsible for being able to complete this work without the use of
+// assistance.
 package collections;
 
 import static org.junit.Assert.*;

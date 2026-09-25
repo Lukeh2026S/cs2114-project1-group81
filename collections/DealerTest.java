@@ -1,15 +1,15 @@
 package collections;
 
 import static org.junit.Assert.*;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Before;
+import org.junit.Test;
 /*
     test for the dealer class
 */
 public class DealerTest 
 {
     private Dealer dealer;
-    @BeforeEach
+    @Before
     public void setUp()
     {
         dealer = new Dealer();
@@ -62,7 +62,7 @@ public class DealerTest
         int originalSize = Game.drawPile.getDeckLength();
 
         dealer.drawNumCards(2);
-        assertEquals(originalSize-2, Game.drawPile.getDeckLength());
+        assertEquals(originalSize - 2, Game.drawPile.getDeckLength());
     }
     @Test
     public void testDrawNumCardsZero()

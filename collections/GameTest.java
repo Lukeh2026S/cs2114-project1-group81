@@ -1,8 +1,8 @@
 package collections;
 
 import static org.junit.Assert.*;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Before;
+import org.junit.Test;
 /*
     test for the game class
 */
@@ -11,7 +11,7 @@ public class GameTest
 {
     private Dealer dealer;
     private User user;
-    @BeforeEach
+    @Before
     public void setUp()
     {
         dealer = new Dealer();

@@ -14,7 +14,7 @@ import org.junit.Test;
 public class UserTest
 {
     private User user;
-    
+
     @Before
     public void setUp()
     {
@@ -40,7 +40,7 @@ public class UserTest
         assertEquals(2, user.getUserHandLength());
         assertEquals("KS", user.getUserCard(0).getSuitAndRank());
         assertEquals("AD", user.getUserCard(1).getSuitAndRank());
-        assertEquals(21, user.getUserHandLength());
+        assertEquals(21, user.userHandValue());
     }
     @Test
     public void testDrawNumCards()

@@ -108,7 +108,7 @@ public class Game {
             }
             else {
                 checkWin(dealer1, user1);
-            }
+            }            
             shuffleSplitCards(user1);
             dealer1.shuffleDealerCards();
 

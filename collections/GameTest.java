@@ -1,3 +1,5 @@
+// @author Mayank Rudraraju, Luke Hill, Abigel Daniel
+// @version 2026.09.25
 package collections;
 
 import static org.junit.Assert.*;

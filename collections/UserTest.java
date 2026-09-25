@@ -94,7 +94,7 @@ public class UserTest
         user.addUserCard(new Card("4", "H"));
 
         user.printUserCards();
-        asserEquals("KS 4H", systemOut().getHistory());
+        assertEquals("KS 4H", systemOut().getHistory());
 
     }
     //@Test

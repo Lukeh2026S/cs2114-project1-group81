@@ -5,6 +5,8 @@
 // I will not lie, cheat, or steal, nor will I accept the actions of those who
 // do.
 // -- Mayank Rudraraju, Luke Hill, Abigel Daniel
+// @author Mayank Rudraraju, Luke Hill, Abigel Daniel
+// @version 2026.09.25
 // LLM Statement:
 // I have not used any assistance for the assignment beyond course resources and
 // staff.

@@ -9,10 +9,13 @@
 // @version 2026.09.25
 // LLM Statement:
 //
-// During the preparation of this assignment, I, Mayank Rudraraju, Luke Hill, Abigel Daniel used Claude 
+// During the preparation of this assignment, I, Mayank Rudraraju, Luke Hill,
+// Abigel Daniel used Claude
 // in Test classes to debug and format.
-// After using this tool, I reviewed and edited the content as needed to ensure its
-// accuracy and take full responsibility for the content in relation to grading. I understand
+// After using this tool, I reviewed and edited the content as needed to ensure
+// its
+// accuracy and take full responsibility for the content in relation to grading.
+// I understand
 // that I am responsible for being able to complete this work without the use of
 // assistance.
 package collections;
@@ -22,32 +25,30 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test class for Deck, where it verifies constructors for zero, single, 
- * and multiple decks, card retrieval, drawing, shuffling, deck length, 
+ * Test class for Deck, where it verifies constructors for zero, single,
+ * and multiple decks, card retrieval, drawing, shuffling, deck length,
  * and hand value calculations (including face cards and soft/hard aces).
  * 
  * @author Mayank Rudraraju, Luke Hill, Abigel Daniel
  * @version 2026.09.25
  */
-public class DeckTest
-{
+public class DeckTest {
     /**
      * Test constructor with 0 decks to ensure it initializes an empty deck.
      */
     @Test
-    public void testConstructorZeroDecks()
-    {
+    public void testConstructorZeroDecks() {
         Deck deck = new Deck(0);
         assertEquals(0, deck.getDeckLength());
     }
 
+
     /**
-     * Test constructor with 1 standard deck (52 cards) and verify 
+     * Test constructor with 1 standard deck (52 cards) and verify
      * correct initial card order and suit/rank creation.
      */
     @Test
-    public void testConstructorOneDeck()
-    {
+    public void testConstructorOneDeck() {
         Deck deck = new Deck(1);
         assertEquals(52, deck.getDeckLength());
 
@@ -59,23 +60,23 @@ public class DeckTest
         assertEquals("2D", deck.getCard(13).getSuitAndRank());
     }
 
+
     /**
-     * Test constructor with 2 decks to ensure it correctly 
+     * Test constructor with 2 decks to ensure it correctly
      * combines multiple decks (104 cards).
      */
     @Test
-    public void testConstructorTwoDecks()
-    {
+    public void testConstructorTwoDecks() {
         Deck deck = new Deck(2);
         assertEquals(104, deck.getDeckLength());
     }
+
 
     /**
      * Test getting a specific card from the deck by index.
      */
     @Test
-    public void testGetCard()
-    {
+    public void testGetCard() {
         Deck deck = new Deck(0);
         deck.addCard(new Card("9", "H"));
         deck.addCard(new Card("Q", "S"));
@@ -84,13 +85,13 @@ public class DeckTest
         assertEquals("QS", deck.getCard(1).getSuitAndRank());
     }
 
+
     /**
-     * Test drawing a card from a specific index, ensuring it returns 
+     * Test drawing a card from a specific index, ensuring it returns
      * the correct card and reduces the deck length.
      */
     @Test
-    public void testDrawCard()
-    {
+    public void testDrawCard() {
         Deck deck = new Deck(0);
         deck.addCard(new Card("9", "H"));
         deck.addCard(new Card("Q", "S"));
@@ -102,24 +103,24 @@ public class DeckTest
         assertEquals("QS", deck.getCard(0).getSuitAndRank());
     }
 
+
     /**
      * Test getting the length of the deck dynamically as cards are added.
      */
     @Test
-    public void testGetDeckLength()
-    {
+    public void testGetDeckLength() {
         Deck deck = new Deck(0);
         assertEquals(0, deck.getDeckLength());
         deck.addCard(new Card("3", "C"));
         assertEquals(1, deck.getDeckLength());
     }
 
+
     /**
      * Test adding cards individually to the deck.
      */
     @Test
-    public void testAddCard()
-    {
+    public void testAddCard() {
         Deck deck = new Deck(0);
         deck.addCard(new Card("3", "C"));
         deck.addCard(new Card("4", "D"));
@@ -129,24 +130,24 @@ public class DeckTest
         assertEquals("4D", deck.getCard(1).getSuitAndRank());
     }
 
+
     /**
      * Test shuffling a full deck maintains the expected total card count.
      */
     @Test
-    public void testShuffleCardSameLength()
-    {
+    public void testShuffleCardSameLength() {
         Deck deck = new Deck(1);
         deck.shuffleCards();
         assertEquals(52, deck.getDeckLength());
     }
 
+
     /**
-     * Test shuffling another deck into the main deck, ensuring cards 
+     * Test shuffling another deck into the main deck, ensuring cards
      * are transferred and the other deck is emptied.
      */
     @Test
-    public void testShuffleInDeck()
-    {
+    public void testShuffleInDeck() {
         Deck main = new Deck(0);
         main.addCard(new Card("2", "C"));
 
@@ -162,22 +163,22 @@ public class DeckTest
         assertEquals("9S", main.getCard(2).getSuitAndRank());
     }
 
+
     /**
      * Test that an empty deck evaluates to a value of 0.
      */
     @Test
-    public void testGetDeckValueEmpty()
-    {
+    public void testGetDeckValueEmpty() {
         Deck deck = new Deck(0);
         assertEquals(0, deck.getDeckValue());
     }
+
 
     /**
      * Test deck value calculation with a mix of number and face cards.
      */
     @Test
-    public void testGetDeckValueNumberAndFaceCards()
-    {
+    public void testGetDeckValueNumberAndFaceCards() {
         Deck deck = new Deck(0);
 
         deck.addCard(new Card("10", "C"));
@@ -185,12 +186,12 @@ public class DeckTest
         assertEquals(14, deck.getDeckValue());
     }
 
+
     /**
      * Test deck value calculation when an Ace counts high (soft ace).
      */
     @Test
-    public void testGetDeckValueSoftAce()
-    {
+    public void testGetDeckValueSoftAce() {
         Deck deck = new Deck(0);
 
         deck.addCard(new Card("A", "C"));
@@ -198,27 +199,28 @@ public class DeckTest
         assertEquals(15, deck.getDeckValue());
     }
 
+
     /**
-     * Test deck value calculation when an Ace counts low to prevent a bust (hard ace).
+     * Test deck value calculation when an Ace counts low to prevent a bust
+     * (hard ace).
      */
     @Test
-    public void testGetDeckValueHardAce()
-    {
+    public void testGetDeckValueHardAce() {
         Deck deck = new Deck(0);
 
         deck.addCard(new Card("A", "C"));
         deck.addCard(new Card("4", "D"));
         deck.addCard(new Card("8", "S"));
-        
+
         assertEquals(13, deck.getDeckValue());
     }
+
 
     /**
      * Test deck value calculation with multiple aces in the hand.
      */
     @Test
-    public void testGetDeckValueTwoAces()
-    {
+    public void testGetDeckValueTwoAces() {
         Deck deck = new Deck(0);
 
         deck.addCard(new Card("A", "C"));

@@ -9,10 +9,13 @@
 // @version 2026.09.25
 // LLM Statement:
 //
-// During the preparation of this assignment, I, Mayank Rudraraju, Luke Hill, Abigel Daniel used Claude 
+// During the preparation of this assignment, I, Mayank Rudraraju, Luke Hill,
+// Abigel Daniel used Claude
 // in Test classes to debug and format.
-// After using this tool, I reviewed and edited the content as needed to ensure its
-// accuracy and take full responsibility for the content in relation to grading. I understand
+// After using this tool, I reviewed and edited the content as needed to ensure
+// its
+// accuracy and take full responsibility for the content in relation to grading.
+// I understand
 // that I am responsible for being able to complete this work without the use of
 // assistance.
 package collections;
@@ -22,15 +25,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test class for Game. Verifies various win, loss, and push conditions 
- * handled by the checkWin method, including natural blackjacks, busts, 
+ * Test class for Game. Verifies various win, loss, and push conditions
+ * handled by the checkWin method, including natural blackjacks, busts,
  * pushes, and standard card value comparisons.
  * 
  * @author Mayank Rudraraju, Luke Hill, Abigel Daniel
  * @version 2026.03.25
  */
-public class GameTest
-{
+public class GameTest {
     private Dealer dealer;
     private User user;
 
@@ -39,21 +41,20 @@ public class GameTest
      * Initializes a fresh dealer, user with starting chips, and empty piles.
      */
     @BeforeEach
-    public void setUp()
-    {
+    public void setUp() {
         dealer = new Dealer();
         user = new User(500);
         Game.drawPile = new Deck(0);
         Game.discardPile = new Deck(0);
     }
 
+
     /**
-     * Test checkWin when the dealer has a natural blackjack 
+     * Test checkWin when the dealer has a natural blackjack
      * and the user loses their bet.
      */
     @Test
-    public void testCheckWinDealerBlackjack()
-    {
+    public void testCheckWinDealerBlackjack() {
         dealer.addDealerCard(new Card("A", "S"));
         dealer.addDealerCard(new Card("K", "H"));
 
@@ -69,12 +70,13 @@ public class GameTest
         assertEquals(0, user.getCurrentBet());
     }
 
+
     /**
-     * Test checkWin when both the dealer and user have natural blackjacks (push).
+     * Test checkWin when both the dealer and user have natural blackjacks
+     * (push).
      */
     @Test
-    public void testCheckWinBoth()
-    {
+    public void testCheckWinBoth() {
         dealer.addDealerCard(new Card("A", "S"));
         dealer.addDealerCard(new Card("K", "H"));
 
@@ -90,13 +92,13 @@ public class GameTest
         assertEquals(0, user.getCurrentBet());
     }
 
+
     /**
-     * Test checkWin when only the user has a natural blackjack 
+     * Test checkWin when only the user has a natural blackjack
      * and wins with a blackjack payout.
      */
     @Test
-    public void testCheckWinUser()
-    {
+    public void testCheckWinUser() {
         dealer.addDealerCard(new Card("10", "S"));
         dealer.addDealerCard(new Card("6", "H"));
 
@@ -112,12 +114,13 @@ public class GameTest
         assertEquals(0, user.getCurrentBet());
     }
 
+
     /**
-     * Test checkWin when the user has a higher hand value than the dealer without busting.
+     * Test checkWin when the user has a higher hand value than the dealer
+     * without busting.
      */
     @Test
-    public void testCheckWinUserHigherValue()
-    {
+    public void testCheckWinUserHigherValue() {
         dealer.addDealerCard(new Card("10", "S"));
         dealer.addDealerCard(new Card("6", "H"));
         dealer.addDealerCard(new Card("2", "C"));
@@ -133,12 +136,12 @@ public class GameTest
         assertEquals(0, user.getCurrentBet());
     }
 
+
     /**
      * Test checkWin when the dealer has a higher hand value than the user.
      */
     @Test
-    public void testCheckWinDealerHigherValue()
-    {
+    public void testCheckWinDealerHigherValue() {
         dealer.addDealerCard(new Card("10", "S"));
         dealer.addDealerCard(new Card("9", "H"));
 
@@ -151,15 +154,16 @@ public class GameTest
         Game.checkWin(dealer, user);
 
         assertEquals(400, user.getUserChips());
-        assertEquals(0, user.getCurrentBet()); 
+        assertEquals(0, user.getCurrentBet());
     }
 
+
     /**
-     * Test checkWin when both the dealer and user end up with equal hand values (push).
+     * Test checkWin when both the dealer and user end up with equal hand values
+     * (push).
      */
     @Test
-    public void testCheckWinPushOnEqualVal()
-    {
+    public void testCheckWinPushOnEqualVal() {
         dealer.addDealerCard(new Card("10", "S"));
         dealer.addDealerCard(new Card("5", "H"));
         dealer.addDealerCard(new Card("5", "C"));
@@ -173,15 +177,15 @@ public class GameTest
         Game.checkWin(dealer, user);
 
         assertEquals(450, user.getUserChips());
-        assertEquals(0, user.getCurrentBet()); 
+        assertEquals(0, user.getCurrentBet());
     }
+
 
     /**
      * Test checkWin when the dealer busts, resulting in a win for the user.
      */
     @Test
-    public void testCheckWinDealerBust()
-    {
+    public void testCheckWinDealerBust() {
         dealer.addDealerCard(new Card("10", "S"));
         dealer.addDealerCard(new Card("9", "H"));
         dealer.addDealerCard(new Card("5", "C"));
@@ -198,12 +202,12 @@ public class GameTest
         assertEquals(0, user.getCurrentBet());
     }
 
+
     /**
      * Test checkWin when the user busts before the dealer.
      */
     @Test
-    public void testCheckWinUserBusts()
-    {
+    public void testCheckWinUserBusts() {
         dealer.addDealerCard(new Card("10", "S"));
         dealer.addDealerCard(new Card("6", "H"));
 
@@ -220,12 +224,12 @@ public class GameTest
         assertEquals(0, user.getCurrentBet());
     }
 
+
     /**
      * Test checkWin when both the dealer and user bust.
      */
     @Test
-    public void testCheckWinBothBust()
-    {
+    public void testCheckWinBothBust() {
         dealer.addDealerCard(new Card("10", "S"));
         dealer.addDealerCard(new Card("9", "H"));
         dealer.addDealerCard(new Card("5", "C"));

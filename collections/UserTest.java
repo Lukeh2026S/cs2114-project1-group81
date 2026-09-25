@@ -9,10 +9,13 @@
 // @version 2026.09.25
 // LLM Statement:
 //
-// During the preparation of this assignment, I, Mayank Rudraraju, Luke Hill, Abigel Daniel used Claude 
+// During the preparation of this assignment, I, Mayank Rudraraju, Luke Hill,
+// Abigel Daniel used Claude
 // in Test classes to debug and format.
-// After using this tool, I reviewed and edited the content as needed to ensure its
-// accuracy and take full responsibility for the content in relation to grading. I understand
+// After using this tool, I reviewed and edited the content as needed to ensure
+// its
+// accuracy and take full responsibility for the content in relation to grading.
+// I understand
 // that I am responsible for being able to complete this work without the use of
 // assistance.
 package collections;
@@ -22,18 +25,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Unit tests for card class - Verifies user initialization, chip and bet management, 
- * adding/drawing cards into user hands, hand value calculations, 
+ * Unit tests for card class - Verifies user initialization, chip and bet
+ * management,
+ * adding/drawing cards into user hands, hand value calculations,
  * and shuffling user cards back into the discard pile.
  * 
- * used used claude to help  finalize the list (method names) of the test cases
- *  we wanted to write in case we missed anything important.
+ * used used claude to help finalize the list (method names) of the test cases
+ * we wanted to write in case we missed anything important.
  * 
  * @author Mayank Rudraraju, Luke Hill, Abigel Daniel
  * @version 2026.09.25
  */
-public class UserTest
-{
+public class UserTest {
     private User user;
 
     /**
@@ -41,20 +44,19 @@ public class UserTest
      * Initializes a fresh user with starting chips and empty piles.
      */
     @BeforeEach
-    public void setUp()
-    {
+    public void setUp() {
         user = new User(500);
         Game.drawPile = new Deck(0);
         Game.discardPile = new Deck(0);
     }
 
+
     /**
-     * Test constructor and initial state of a User, verifying starting chips, 
+     * Test constructor and initial state of a User, verifying starting chips,
      * hand length, hand value, current bets, and split flags.
      */
     @Test
-    public void testUser()
-    {
+    public void testUser() {
         assertEquals(500, user.getUserChips());
         assertEquals(0, user.getUserHandLength());
         assertEquals(0, user.userHandValue());
@@ -62,13 +64,13 @@ public class UserTest
         assertFalse(user.checkSplit());
     }
 
+
     /**
-     * Test adding cards directly to a user's hand and verify 
+     * Test adding cards directly to a user's hand and verify
      * hand length, individual card values, and total hand value.
      */
     @Test
-    public void testAddCardAndHandValue()
-    {
+    public void testAddCardAndHandValue() {
         user.addUserCard(new Card("K", "S"));
         user.addUserCard(new Card("A", "D"));
 
@@ -78,13 +80,13 @@ public class UserTest
         assertEquals(21, user.userHandValue());
     }
 
+
     /**
-     * Test drawing a specified number of cards from the draw pile 
+     * Test drawing a specified number of cards from the draw pile
      * into the user's hand.
      */
     @Test
-    public void testDrawNumCards()
-    {
+    public void testDrawNumCards() {
         Game.drawPile.addCard(new Card("7", "C"));
         Game.drawPile.addCard(new Card("9", "D"));
         Game.drawPile.addCard(new Card("3", "H"));
@@ -97,12 +99,12 @@ public class UserTest
         assertEquals(1, Game.drawPile.getDeckLength());
     }
 
+
     /**
      * Test chip and bet accessor and mutator methods.
      */
     @Test
-    public void testChipsAndBetAccessors()
-    {
+    public void testChipsAndBetAccessors() {
         user.setUserChips(250);
         assertEquals(250, user.getUserChips());
 
@@ -113,13 +115,13 @@ public class UserTest
         assertEquals(25, user.getCurrentBet());
     }
 
+
     /**
-     * Test placing bets with chip validation (handles invalid bounds, 
+     * Test placing bets with chip validation (handles invalid bounds,
      * sufficient chips, and cumulative betting behavior).
      */
     @Test
-    public void testBetUserChips()
-    {
+    public void testBetUserChips() {
         assertFalse(user.betUserChips(-10));
         assertFalse(user.betUserChips(1000));
         assertEquals(500, user.getUserChips());
@@ -134,13 +136,13 @@ public class UserTest
         assertEquals(150, user.getCurrentBet());
     }
 
+
     /**
-     * Test shuffling user cards back into the discard pile, 
+     * Test shuffling user cards back into the discard pile,
      * verifying the user hand is cleared and the discard pile size increases.
      */
     @Test
-    public void testShuffleUserCards()
-    {
+    public void testShuffleUserCards() {
         user.addUserCard(new Card("K", "S"));
         user.addUserCard(new Card("4", "H"));
         int discardSizeBefore = Game.discardPile.getDeckLength();
